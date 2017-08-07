@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.MessageFormat;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Optional;
@@ -81,13 +82,29 @@ public class ObjectsRepository {
               ? false
               : true;
         }).collect(Collectors.toSet());
+    if (changes.isEmpty()) {
+      return;
+    }
     saveSnapshotObjects(changes);
     saveFileDataSet(changes);
     saveCommit(commitName, getObjectSHA1(changes));
   }
 
-  public void getLog() {
-
+  public String getLog() {
+    try {
+      List<String> commitList = getCommitList();
+      return commitList
+          .stream()
+          .map(commit -> MessageFormat.format(
+              "Commit name:{0}{1}{2}",
+              commit.split("=")[1],
+              "\n",
+              commit.split("=")[0])
+          )
+          .collect(Collectors.joining("\n"));
+    } catch (IOException ex) {
+      throw new RuntimeException(ex.getMessage(), ex);
+    }
   }
 
   /*
@@ -139,7 +156,7 @@ public class ObjectsRepository {
 
   private void saveCommit(String commitName, String commitSHA1) throws IOException {
     try (BufferedWriter writer = Files.newBufferedWriter(commitListFilePath, APPEND)) {
-      writer.write(commitSHA1 + "=" + commitName);
+      writer.write(commitSHA1 + "=" + commitName + "\n");
     }
   }
 

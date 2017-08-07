@@ -25,8 +25,8 @@ public class VersionControlService {
     objectsRepository.saveSnapshot(fileDataSet, commitName);
   }
 
-  public void log() {
-//    objectsRepository.getLog();
+  public String log() {
+    return objectsRepository.getLog();
   }
 
   public Object rebase() {
