@@ -1,6 +1,7 @@
 package services;
 
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedInputStream;
@@ -9,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -23,16 +25,20 @@ import model.FileData;
 @Service
 public class StructureService {
 
-  private File rootFile;
+  @Value("${rootFolderName}")
+  private String rootFolderName;
+  private String rootVCSFullName;
+  private File watchedFolder;
   private final int DEFAULT_BUFFER_SIZE = 8192;
 
-  public void setRootFile(File rootFile) {
-    this.rootFile = rootFile;
+  public void setWatchedFolder(File watchedFolder) {
+    this.watchedFolder = watchedFolder;
+    rootVCSFullName = Paths.get(watchedFolder.toString(), rootFolderName).toString();
   }
 
   public Set<FileData> getProjectStructure() {
     Set<FileData> fileDataSet = new HashSet<>();
-    List<File> files = getAllFiles(rootFile);
+    List<File> files = getAllFiles(watchedFolder);
     for (File file : files) {
       try {
         fileDataSet.add(new FileData(getFileHash(file), file.getName(), getParent(file)));
@@ -68,7 +74,7 @@ public class StructureService {
   }
 
   private String getParent(File file) {
-    Path relativize = rootFile.toPath().relativize(file.toPath());
+    Path relativize = watchedFolder.toPath().relativize(file.toPath());
     Path parent = relativize.getParent();
     return parent == null
         ? ""
@@ -77,25 +83,15 @@ public class StructureService {
 
   private List<File> getAllFiles(File root) {
     List<File> fileList = new ArrayList<>();
-    File[] files = root.listFiles();
-    for (File file : files) {
+    for (File file : root.listFiles()) {
       if (file.isFile()) {
         fileList.add(file);
       } else {
-        fileList.addAll(getAllFiles(file));
+        if (!file.toString().startsWith(rootVCSFullName)) {
+          fileList.addAll(getAllFiles(file));
+        }
       }
     }
     return fileList;
   }
-//
-//  public static void main(String[] args) throws Exception {
-//    StructureService structureService = new StructureService();
-//    for (FileData fileData : structureService.getProjectStructure()) {
-//      System.out.println(fileData);
-//    }
-//
-////    File file = structureService.getAllFiles(rootFile).get(3);
-////    System.out.println(structureService.getParent(file));
-////    System.out.println(structureService.getFileHash(file));
-//  }
 }

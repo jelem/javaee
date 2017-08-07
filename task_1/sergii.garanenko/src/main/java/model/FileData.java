@@ -1,6 +1,9 @@
 package model;
 
-public class FileData {
+import java.io.Serializable;
+import java.util.Objects;
+
+public class FileData implements Serializable {
 
   private String hash;
   private String name;
@@ -22,6 +25,25 @@ public class FileData {
 
   public String getParent() {
     return parent;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    FileData fileData = (FileData) o;
+    return Objects.equals(hash, fileData.hash) &&
+        Objects.equals(name, fileData.name) &&
+        Objects.equals(parent, fileData.parent);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(hash, name, parent);
   }
 
   @Override
