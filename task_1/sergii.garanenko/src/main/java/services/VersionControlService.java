@@ -29,9 +29,8 @@ public class VersionControlService {
     return objectsRepository.getLog();
   }
 
-  public Object rebase() {
-
-    return null;
+  public void revert(String commitName) throws IOException {
+    objectsRepository.revert(commitName);
   }
 
   public void init(String pathToWatch) throws IOException {

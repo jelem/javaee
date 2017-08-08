@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.MessageFormat;
+import java.util.Collections;
 import java.util.Formatter;
 import java.util.List;
 import java.util.Optional;
@@ -97,12 +98,81 @@ public class ObjectsRepository {
   }
 
   /*
-   * method obtain list of full commit data
-   * @param commit main commit data
-   * @return full commit data list
+   * method revert project by commit
+   * @param commitName name of commit
    * */
-  private Set<FileData> getDataSet(Commit commit) throws IOException {
-    return readFileDataSet(commit.getCommitSHA1());
+  public void revert(String commitName) throws IOException {
+    Optional<Commit> commit = getCommit(commitName);
+    Set<FileData> fileDataSet = commit.isPresent()
+        ? readFileDataSet(commit.get().getCommitSHA1())
+        : Collections.emptySet();
+    if (!fileDataSet.isEmpty()) {
+      cleanWatchedProject();
+    }
+    recovery(fileDataSet);
+  }
+
+  private void recovery(Set<FileData> fileDataSet) throws IOException {
+    for (FileData fileData : fileDataSet) {
+      Path soursePath = Paths.get(objectsFolderPath.toString(), fileData.getHash());
+      Path destinationPath = Paths
+          .get(watchedFolder.toPath().toString(), fileData.getParent(), fileData.getName());
+      createPath(destinationPath.getParent());
+      Files.copy(soursePath, destinationPath, COPY_ATTRIBUTES);
+    }
+  }
+
+  private void createPath(Path path) throws IOException {
+    int nameCount = path.getNameCount();
+    int namePointer = nameCount;
+    Path startPath = path;
+    while (!startPath.toFile().exists()) {
+      namePointer--;
+      startPath = startPath.getParent();
+    }
+    while (nameCount != namePointer) {
+      startPath = Files
+          .createDirectory(Paths.get(startPath.toString(), path.getName(namePointer).toString()));
+      namePointer++;
+    }
+  }
+
+  private void cleanWatchedProject() {
+    File[] files = watchedFolder
+        .listFiles(pathname -> !pathname.getPath().equals(rootFolderPath.toString()));
+    for (File file : files) {
+      delete(file);
+    }
+  }
+
+  private void delete(File file) {
+    if (!file.exists()) {
+      return;
+    }
+    if (file.isDirectory()) {
+      for (File childFile : file.listFiles()) {
+        delete(childFile);
+      }
+      file.delete();
+    } else {
+      file.delete();
+    }
+  }
+
+  /*
+  * method reads list of changed files data by file name
+  * @param commitSHA1 file name of some changed files data list
+  * @return data of all watched files at the time of specified commit or empty collection
+  * */
+  private Set<FileData> readFileDataSet(String commitSHA1) throws IOException {
+    try {
+      try (ObjectInputStream inputStream = new ObjectInputStream(
+          new FileInputStream(logsFolderPath.resolve(commitSHA1).toFile()))) {
+        return (Set<FileData>) inputStream.readObject();
+      }
+    } catch (ClassNotFoundException ex) {
+      throw new RuntimeException(ex.getMessage(), ex);
+    }
   }
 
   /*
@@ -172,22 +242,6 @@ public class ObjectsRepository {
     try (ObjectOutputStream outputStream = new ObjectOutputStream(
         new FileOutputStream(logsFolderPath.resolve(commitSHA1).toFile()))) {
       outputStream.writeObject(fileDataSet);
-    }
-  }
-
-  /*
-  * method reads list of changed files data by file name
-  * @param commitSHA1 file name of some changed files data list
-  * @return data of all watched files at the time of specified commit or empty collection
-  * */
-  private Set<FileData> readFileDataSet(String commitSHA1) throws IOException {
-    try {
-      try (ObjectInputStream inputStream = new ObjectInputStream(
-          new FileInputStream(logsFolderPath.resolve(commitSHA1).toFile()))) {
-        return (Set<FileData>) inputStream.readObject();
-      }
-    } catch (ClassNotFoundException ex) {
-      throw new RuntimeException(ex.getMessage(), ex);
     }
   }
 
