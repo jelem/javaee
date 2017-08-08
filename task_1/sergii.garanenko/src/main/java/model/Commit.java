@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Commit {
 
   private String commitName;
@@ -16,5 +18,23 @@ public class Commit {
 
   public String getCommitSHA1() {
     return commitSHA1;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Commit commit = (Commit) o;
+    return Objects.equals(commitName, commit.commitName) &&
+        Objects.equals(commitSHA1, commit.commitSHA1);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(commitName, commitSHA1);
   }
 }

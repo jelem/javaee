@@ -74,32 +74,21 @@ public class ObjectsRepository {
   }
 
   public void saveSnapshot(Set<FileData> fileDataSet, String commitName) throws IOException {
-    Set<FileData> changes = fileDataSet
-        .stream()
-        .filter(fileData -> {
-          String commitSHA1 = fileData.getHash();
-          return Files.exists(objectsFolderPath.resolve(commitSHA1))
-              ? false
-              : true;
-        }).collect(Collectors.toSet());
-    if (changes.isEmpty()) {
-      return;
-    }
-    saveSnapshotObjects(changes);
-    saveFileDataSet(changes);
-    saveCommit(commitName, getObjectSHA1(changes));
+    saveSnapshotObjects(fileDataSet);
+    saveFileDataSet(fileDataSet);
+    saveCommit(new Commit(getObjectSHA1(fileDataSet), commitName));
   }
 
   public String getLog() {
     try {
-      List<String> commitList = getCommitList();
+      List<Commit> commitList = getCommitList();
       return commitList
           .stream()
           .map(commit -> MessageFormat.format(
               "Commit name:{0}{1}{2}",
-              commit.split("=")[1],
+              commit.getCommitName(),
               "\n",
-              commit.split("=")[0])
+              commit.getCommitSHA1())
           )
           .collect(Collectors.joining("\n"));
     } catch (IOException ex) {
@@ -117,28 +106,36 @@ public class ObjectsRepository {
   }
 
   /*
-   * method obtain commit data by commit name
+   * method obtains commit data by commit name
    * @return data of commit if it is exist
    * */
   private Optional<Commit> getCommit(final String commitName) throws IOException {
-    List<String> commitList = getCommitList();
+    List<Commit> commitList = getCommitList();
     return commitList
         .stream()
-        .filter(commitString -> {
-          String[] split = commitString.split("=");
-          return split[1].equals(commitName) ? true : false;
-        })
-        .map(commitString -> {
-          String[] split = commitString.split("=");
-          return new Commit(split[0], split[1]);
-        })
+        .filter(commit -> commit.getCommitName().equals(commitName) ? true : false)
         .findFirst();
   }
 
-  private List<String> getCommitList() throws IOException {
-    return Files.readAllLines(commitListFilePath);
+  /*
+    * method obtains all commit list
+    * @return all commit list if it is exist
+    * */
+  private List<Commit> getCommitList() throws IOException {
+    List<String> lines = Files.readAllLines(commitListFilePath);
+    return lines
+        .stream()
+        .map(line -> {
+          String[] split = line.split("=");
+          return new Commit(split[0], split[1]);
+        })
+        .collect(Collectors.toList());
   }
 
+  /*
+    * method saves files from watched directories
+    * @param fileDataSet data of all watched files
+    * */
   private void saveSnapshotObjects(Set<FileData> fileDataSet) throws IOException {
     for (FileData fileData : fileDataSet) {
       Path soursePath = Paths.get(
@@ -154,15 +151,21 @@ public class ObjectsRepository {
     }
   }
 
-  private void saveCommit(String commitName, String commitSHA1) throws IOException {
-    try (BufferedWriter writer = Files.newBufferedWriter(commitListFilePath, APPEND)) {
-      writer.write(commitSHA1 + "=" + commitName + "\n");
+  /*
+  * method saves commit record if it is not exist
+  * @param commit
+  * */
+  private void saveCommit(Commit commit) throws IOException {
+    if (!getCommitList().contains(commit)) {
+      try (BufferedWriter writer = Files.newBufferedWriter(commitListFilePath, APPEND)) {
+        writer.write(commit.getCommitSHA1() + "=" + commit.getCommitName() + "\n");
+      }
     }
   }
 
   /*
   * method saves list of changed files data after last commit saved
-  * @param fileDataSet data of changed files
+  * @param fileDataSet data of all watched files
   * */
   private void saveFileDataSet(Set<FileData> fileDataSet) throws IOException {
     String commitSHA1 = getObjectSHA1(fileDataSet);
@@ -175,7 +178,7 @@ public class ObjectsRepository {
   /*
   * method reads list of changed files data by file name
   * @param commitSHA1 file name of some changed files data list
-  * @return changed files data list or empty collection
+  * @return data of all watched files at the time of specified commit or empty collection
   * */
   private Set<FileData> readFileDataSet(String commitSHA1) throws IOException {
     try {
