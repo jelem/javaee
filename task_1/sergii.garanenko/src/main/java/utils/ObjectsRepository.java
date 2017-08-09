@@ -244,7 +244,8 @@ public class ObjectsRepository {
   private void saveCommit(Commit commit) throws IOException {
     if (!getCommitList().contains(commit)) {
       try (BufferedWriter writer = Files.newBufferedWriter(commitListFilePath, APPEND)) {
-        writer.write(commit.getCommitSHA1() + "=" + commit.getCommitName() + "\n");
+        writer.write(commit.getCommitSHA1() + "=" + commit.getCommitName() + System
+            .getProperty("line.separator"));
       }
     }
   }
