@@ -3,6 +3,9 @@ package utils;
 import static java.nio.file.StandardCopyOption.COPY_ATTRIBUTES;
 import static java.nio.file.StandardOpenOption.APPEND;
 
+import model.Commit;
+import model.FileData;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -27,9 +30,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import model.Commit;
-import model.FileData;
 
 @Component
 public class ObjectsRepository {
@@ -117,7 +117,11 @@ public class ObjectsRepository {
       Path soursePath = Paths.get(objectsFolderPath.toString(), fileData.getHash());
       Path destinationPath = Paths
           .get(watchedFolder.toPath().toString(), fileData.getParent(), fileData.getName());
-      createPath(destinationPath.getParent());
+      Path parent = destinationPath.getParent();
+      if (parent == null) {
+        return;
+      }
+      createPath(parent);
       Files.copy(soursePath, destinationPath, COPY_ATTRIBUTES);
     }
   }
@@ -129,6 +133,9 @@ public class ObjectsRepository {
     while (!startPath.toFile().exists()) {
       namePointer--;
       startPath = startPath.getParent();
+      if (startPath == null) {
+        break;
+      }
     }
     while (nameCount != namePointer) {
       startPath = Files
@@ -140,8 +147,10 @@ public class ObjectsRepository {
   private void cleanWatchedProject() {
     File[] files = watchedFolder
         .listFiles(pathname -> !pathname.getPath().equals(rootFolderPath.toString()));
-    for (File file : files) {
-      delete(file);
+    if (files != null) {
+      for (File file : files) {
+        delete(file);
+      }
     }
   }
 
@@ -150,12 +159,19 @@ public class ObjectsRepository {
       return;
     }
     if (file.isDirectory()) {
-      for (File childFile : file.listFiles()) {
-        delete(childFile);
+      File[] files = file.listFiles();
+      if (files != null) {
+        for (File childFile : files) {
+          delete(childFile);
+        }
+        if (!file.delete()) {
+          System.out.println(String.format("Directory %s wasn't deleted", file.toString()));
+        }
       }
-      file.delete();
     } else {
-      file.delete();
+      if (!file.delete()) {
+        System.out.println(String.format("File %s wasn't deleted", file.toString()));
+      }
     }
   }
 
@@ -215,7 +231,7 @@ public class ObjectsRepository {
       );
       try {
         Files.copy(soursePath, objectsFolderPath.resolve(fileData.getHash()), COPY_ATTRIBUTES);
-      } catch (FileAlreadyExistsException e) {
+      } catch (FileAlreadyExistsException ex) {
         System.out.println("File aleardy exist:" + fileData.getName());
       }
     }
@@ -254,8 +270,8 @@ public class ObjectsRepository {
     MessageDigest digest = null;
     try {
       digest = MessageDigest.getInstance("SHA1");
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
+    } catch (NoSuchAlgorithmException ex) {
+      throw new RuntimeException("NoSuchAlgorithmException", ex);
     }
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     try (ObjectOutputStream out = new ObjectOutputStream(baos)) {

@@ -1,5 +1,6 @@
 package services;
 
+import model.FileData;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import model.FileData;
-
 
 @Service
 public class StructureService {
@@ -29,7 +28,7 @@ public class StructureService {
   private String rootFolderName;
   private String rootVCSFullName;
   private File watchedFolder;
-  private final int DEFAULT_BUFFER_SIZE = 8192;
+  private static final int defaultBufferSize = 8192;
 
   public void setWatchedFolder(File watchedFolder) {
     this.watchedFolder = watchedFolder;
@@ -42,8 +41,8 @@ public class StructureService {
     for (File file : files) {
       try {
         fileDataSet.add(new FileData(getFileHash(file), file.getName(), getParent(file)));
-      } catch (IOException e) {
-        e.printStackTrace();
+      } catch (IOException ex) {
+        ex.printStackTrace();
       }
     }
     return fileDataSet;
@@ -54,12 +53,12 @@ public class StructureService {
     MessageDigest digest = null;
     try {
       digest = MessageDigest.getInstance("SHA1");
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
+    } catch (NoSuchAlgorithmException ex) {
+      throw new RuntimeException("NoSuchAlgorithmException", ex);
     }
     try (InputStream inputStream = new BufferedInputStream(new FileInputStream(file),
-        DEFAULT_BUFFER_SIZE)) {
-      byte[] bytes = new byte[DEFAULT_BUFFER_SIZE];
+        defaultBufferSize)) {
+      byte[] bytes = new byte[defaultBufferSize];
       for (int read = 0; (read = inputStream.read(bytes)) != -1; ) {
         digest.update(bytes, 0, read);
       }
@@ -83,12 +82,16 @@ public class StructureService {
 
   private List<File> getAllFiles(File root) {
     List<File> fileList = new ArrayList<>();
-    for (File file : root.listFiles()) {
-      if (file.isFile()) {
-        fileList.add(file);
-      } else {
-        if (!file.toString().startsWith(rootVCSFullName)) {
-          fileList.addAll(getAllFiles(file));
+    File[] files = root.listFiles();
+
+    if (files != null) {
+      for (File file : files) {
+        if (file.isFile()) {
+          fileList.add(file);
+        } else {
+          if (!file.toString().startsWith(rootVCSFullName)) {
+            fileList.addAll(getAllFiles(file));
+          }
         }
       }
     }

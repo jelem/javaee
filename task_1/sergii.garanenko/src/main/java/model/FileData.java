@@ -28,17 +28,17 @@ public class FileData implements Serializable {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o) {
+  public boolean equals(Object obj) {
+    if (this == obj) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (obj == null || getClass() != obj.getClass()) {
       return false;
     }
-    FileData fileData = (FileData) o;
-    return Objects.equals(hash, fileData.hash) &&
-        Objects.equals(name, fileData.name) &&
-        Objects.equals(parent, fileData.parent);
+    FileData fileData = (FileData) obj;
+    return Objects.equals(hash, fileData.hash)
+        && Objects.equals(name, fileData.name)
+        && Objects.equals(parent, fileData.parent);
   }
 
   @Override
@@ -48,10 +48,10 @@ public class FileData implements Serializable {
 
   @Override
   public String toString() {
-    return "FileData{" +
-        "hash='" + hash + '\'' +
-        ", name='" + name + '\'' +
-        ", parent='" + parent + '\'' +
-        '}';
+    return "FileData{"
+        + "hash='" + hash + '\''
+        + ", name='" + name + '\''
+        + ", parent='" + parent + '\''
+        + '}';
   }
 }

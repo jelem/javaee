@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +18,7 @@ public class CommandService {
   private VersionControlService controlService;
 
   public void listen() {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
 
     while (true) {
       try {
@@ -50,11 +51,13 @@ public class CommandService {
                   controlService.revert(commands.get(1));
                 }
                 break;
+              default:
+                break;
             }
           }
         }
-      } catch (IOException e) {
-        e.printStackTrace();
+      } catch (IOException ex) {
+        ex.printStackTrace();
       }
     }
   }
