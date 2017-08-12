@@ -1,5 +1,8 @@
-package com;
+package com.gitapp.services;
 
+import com.gitapp.RWParent;
+import com.gitapp.control.ControlVersions;
+import com.gitapp.entity.Version;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,26 +14,20 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.ControlVersions.readVersionFile;
-import static com.CreateDB.getDBURL;
-
-/**
- * Created by Марина on 12.08.2017.
- */
 public class ReadDB extends RWParent {
     private static final Logger log = LoggerFactory.getLogger(ReadDB.class);
     private List<Path> paths;
 
     public ReadDB() {
-        super(getDBURL());
+        super(CreateDB.getDBURL());
     }
 
     @Override
     protected List<Path> getPaths(String path) throws IOException {
         paths = new ArrayList<>();
-        List<Version> versionList = readVersionFile();
+        List<Version> versionList = ControlVersions.readVersionFile();
         List<String> sha1 = new ArrayList<>();
-        if (!versionList.isEmpty()){
+        if (!versionList.isEmpty()) {
             Version version = versionList.get(versionList.size() - 1);
             for (String sha : version.getSha1List()) {
                 sha1.add(sha.substring(0, 2));
@@ -57,11 +54,11 @@ public class ReadDB extends RWParent {
 
     private List<Path> path(File file, List<String> sha1) {
         File[] files = file.listFiles();
-        if (files != null){
+        if (files != null) {
             for (File f : files) {
                 if (f.isDirectory()) {
                     for (String s : sha1) {
-                        if (f.toPath().startsWith(getDBURL() + "\\" + s)) {
+                        if (f.toPath().startsWith(CreateDB.getDBURL() + "\\" + s)) {
                             path(f, sha1);
                         }
                     }
@@ -79,7 +76,7 @@ public class ReadDB extends RWParent {
         paths = new ArrayList<>();
         List<String> sha = new ArrayList<>();
         sha.add(sha1.substring(0, 2));
-        File file = new File(getDBURL());
+        File file = new File(CreateDB.getDBURL());
         for (Path path : path(file, sha)) {
             byte[] bytes = Files.readAllBytes(path);
             String content = new String(bytes, Charset.defaultCharset());

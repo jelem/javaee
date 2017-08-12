@@ -1,13 +1,13 @@
-package com;
+package com.gitapp.services;
+
+import com.gitapp.RWParent;
+import com.gitapp.entity.Data;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
-/**
- * Created by Марина on 12.08.2017.
- */
 public class SaveData extends RWParent {
 
     private String directoryPath;

@@ -1,10 +1,7 @@
-package com;
+package com.gitapp.entity;
 
 import java.util.List;
 
-/**
- * Created by Марина on 12.08.2017.
- */
 public class Version {
     List<String> sha1List;
     private Integer commit;

@@ -1,13 +1,13 @@
-package com;
+package com.gitapp.control;
+
+import com.gitapp.services.CreateDB;
+import com.gitapp.services.ReadDB;
+import com.gitapp.services.ReadData;
+import com.gitapp.services.SaveData;
 
 import java.io.IOException;
 import java.nio.file.StandardOpenOption;
 
-import static com.ControlVersions.getVersionFileURL;
-
-/**
- * Created by Марина on 12.08.2017.
- */
 public class ControlCommands {
 
     private CreateDB createDB;
@@ -56,7 +56,7 @@ public class ControlCommands {
     public void commit() {
         try {
             readData.read();
-            controlVersions.write(getVersionFileURL(),
+            controlVersions.write(ControlVersions.getVersionFileURL(),
                     controlVersions.getVersion().toString() + "*",
                     StandardOpenOption.APPEND);
             saveData.saveData();

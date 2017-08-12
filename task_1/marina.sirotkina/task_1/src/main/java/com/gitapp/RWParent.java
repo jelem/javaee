@@ -1,5 +1,6 @@
-package com;
+package com.gitapp;
 
+import com.gitapp.entity.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.DigestUtils;
@@ -15,16 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Created by Марина on 12.08.2017.
- */
 public class RWParent {
 
     private static final Logger log = LoggerFactory.getLogger(RWParent.class);
-
-    private static String directoryPath;
     protected static List<Data> fileList;
     protected static List<String> sha1List;
+    private static String directoryPath;
 
 
     public RWParent(String directoryPath) {
@@ -35,7 +32,7 @@ public class RWParent {
         return DigestUtils.md5DigestAsHex(bytes);
     }
 
-    protected void read() throws IOException {
+    public void read() throws IOException {
         fileList = new ArrayList<>();
         sha1List = new ArrayList<>();
         List<Path> pathList = getPaths(directoryPath);
@@ -48,7 +45,7 @@ public class RWParent {
         }
     }
 
-    protected void write(String fileURL, String content, OpenOption openOption) {
+    public void write(String fileURL, String content, OpenOption openOption) {
         BufferedWriter writer = null;
         try {
             writer = Files.newBufferedWriter(Paths.get(fileURL), openOption);
@@ -71,7 +68,7 @@ public class RWParent {
                 .collect(Collectors.toList());
     }
 
-    protected void printData() {
+    public void printData() {
         for (Data data : fileList) {
             log.info(data.toString());
         }

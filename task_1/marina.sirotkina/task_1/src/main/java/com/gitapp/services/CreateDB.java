@@ -1,12 +1,9 @@
-package com;
+package com.gitapp.services;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-/**
- * Created by Марина on 12.08.2017.
- */
 public class CreateDB {
 
     private static String DBURL;

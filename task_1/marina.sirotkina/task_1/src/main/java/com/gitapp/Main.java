@@ -1,28 +1,19 @@
-package com;
+package com.gitapp;
+
+import com.gitapp.control.ControlCommands;
 
 import java.io.IOException;
 import java.util.Scanner;
 
-/**
- * Created by Марина on 12.08.2017.
- */
 public class Main {
     private static ControlCommands controlCommands = new ControlCommands("D:\\git-test");
 
     public static void main(String[] args) throws IOException {
 
-
-        //controlCommands.init();
-        //controlCommands.commit();
-        //controlCommands.pull();
-        //controlCommands.add();
-        //controlCommands.catfile("3ba3f56b3a0d3c4a97eadc1da557397a");
-
         init();
     }
 
     public static void select() {
-
         System.out.println("Select an action:" + "\n"
                 + "add" + "\n"
                 + "pull" + "\n"
@@ -43,7 +34,6 @@ public class Main {
                 case "catfile":
                     System.out.println("Sha:");
                     String sha = scanner.nextLine();
-                    //String wrongLine = scanner.nextLine();
                     controlCommands.catfile(sha);
                 case "commit":
                     controlCommands.commit();
@@ -57,7 +47,7 @@ public class Main {
 
     public static void init() {
         System.out.println("Select an action:" + "\n"
-                + "init - initialize DB"
+                + "init - initialize DB" + "\n"
                 + "exit");
         Scanner scanner = new Scanner(System.in);
         String command = scanner.nextLine();
@@ -67,7 +57,8 @@ public class Main {
                 select();
             case "exit":
                 break;
-            default: System.exit(0);
+            default:
+                System.exit(0);
         }
     }
 }

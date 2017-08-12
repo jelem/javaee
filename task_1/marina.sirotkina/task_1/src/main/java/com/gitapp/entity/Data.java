@@ -1,8 +1,5 @@
-package com;
+package com.gitapp.entity;
 
-/**
- * Created by Марина on 12.08.2017.
- */
 public class Data {
     private String keySHA1;
     private String content;
@@ -34,7 +31,7 @@ public class Data {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("com.Data: ");
+        sb.append("com.gitapp.entity.Data: ");
         sb.append("keySHA1= ").append(keySHA1);
         sb.append(", content= ").append(content);
         return sb.toString();
