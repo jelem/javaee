@@ -6,11 +6,21 @@ import java.util.Scanner;
 import java.util.Vector;
 
 public class Dialog {
+
+    /*
+    Files and Folders represent real files that are under git. If two files are equal they are still stored two times
+     */
     private Folder currentFolder;
     private Folder rootFolder; // modified area
 
+    /*
+    Map stores committed elements (files, folders and commits). If two elements are equal, they are stored only once.
+     */
     private Map<String, String> commitedFilesMap; // committed area
 
+    /*
+   Vector stores history of commits
+    */
     private Vector<Commit> commits;
 
 
