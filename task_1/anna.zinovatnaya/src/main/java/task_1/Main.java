@@ -2,10 +2,10 @@ package main.java;
 
 public class Main {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        Dialog dialog = new Dialog();
-        dialog.start();
+    Dialog dialog = new Dialog();
+    dialog.start();
 
-    }
+  }
 }

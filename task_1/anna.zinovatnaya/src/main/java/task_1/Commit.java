@@ -6,76 +6,75 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-public class Commit implements Element{
+public class Commit implements Element {
 
-    private String hash;
-    private String parent;
-    private String tree;
-    private String message;
-    private Date date;
+  private String hash;
+  private String parent;
+  private String tree;
+  private String message;
+  private Date date;
 
 
 
-    public Commit(String treeHash, String parentHash, String message) {
-        this.tree = treeHash;
-        this.parent = parentHash;
+  public Commit(String treeHash, String parentHash, String message) {
+    this.tree = treeHash;
+    this.parent = parentHash;
 
-        String content = "tree " + treeHash;
-        content += "\nparent " + parentHash;
+    String content = "tree " + treeHash;
+    content += "\nparent " + parentHash;
 
-        this.hash = DigestUtils.sha1Hex(content);
+    this.hash = DigestUtils.sha1Hex(content);
 
-        this.message = message;
-        this.date = new Date();
+    this.message = message;
+    this.date = new Date();
+  }
+
+
+
+  public Commit(String treeHash, String message) {
+    this.tree = treeHash;
+    this.parent = null;
+
+    String content = "tree " + treeHash;
+
+    this.hash = DigestUtils.sha1Hex(content);
+    this.message = message;
+    this.date = new Date();
+  }
+
+
+
+  public String getContent() {
+    String temp = "tree " + tree;
+
+    if (parent != null) {
+      temp += "\nparent " + parent;
     }
 
+    temp += "\n" + message;
 
+    SimpleDateFormat ft =
+        new SimpleDateFormat("dd.MM.yyyy hh:mm:ss a");
 
-    public Commit(String treeHash, String message) {
-        this.tree = treeHash;
-        this.parent = null;
+    temp += "\n" + ft.format(this.date);
 
-        String content = "tree " + treeHash;
-
-        this.hash = DigestUtils.sha1Hex(content);
-        this.message = message;
-        this.date = new Date();
-    }
+    return temp;
+  }
 
 
 
-    public String getContent(){
-        String temp = "tree " + tree;
+  public String getHashCode() {
+    return hash;
+  }
 
-        if(parent != null){
-            temp += "\nparent " + parent;
-        }
 
-        temp += "\n" + message;
-
-        SimpleDateFormat ft =
-                new SimpleDateFormat("dd.MM.yyyy hh:mm:ss a");
-
-        temp += "\n" + ft.format(this.date);
-
-        return temp;
-    }
+  public String getType() {
+    return "commit";
+  }
 
 
 
-    public String getHashCode(){
-        return hash;
-    }
-
-
-
-    public String getType(){
-        return "commit";
-    }
-
-
-
-    public void addToMap(Map map){
-        map.put(this.getHashCode(), this.getContent());
-    }
+  public void addToMap(Map map) {
+    map.put(this.getHashCode(), this.getContent());
+  }
 }

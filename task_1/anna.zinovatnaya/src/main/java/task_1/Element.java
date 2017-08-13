@@ -4,12 +4,12 @@ import java.util.Map;
 
 public interface Element {
 
-    String getContent();
+  String getContent();
 
-    String getHashCode();
+  String getHashCode();
 
-    String getType();
+  String getType();
 
-    void addToMap(Map map);
+  void addToMap(Map map);
 
 }
