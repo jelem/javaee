@@ -66,6 +66,8 @@ public class Dialog {
 
             System.out.print("> ");
 
+            while(!scanner.hasNextLine()){}
+
             option = scanner.nextLine();
 
             switch(option){
