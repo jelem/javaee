@@ -38,3 +38,23 @@
 
 
 8. Загрузите ваше приложение в Tomcat и проверьте, что всё работает (здесь нужно установить реальный сервер, как мы делали в классе).
+
+
+### Пример того, что мы делали в классе (Gradle проект)
+https://github.com/parkhomenko/javaee
+
+### Подключение Gretty плагина для запуска сервера с помощью Gradle:
+1. Добавьте в файл build.gradle строки:
+```groovy
+apply plugin: 'war'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+```
+Вы можете их увидеть в файле проекта-примера.
+2. Запуск сервера из консоли:
+```groovy
+./gradlew appRun
+```
+3. Для запуска сервера в дебаг-режиме:
+```groovy
+./gradlew appRunDebug
+```
