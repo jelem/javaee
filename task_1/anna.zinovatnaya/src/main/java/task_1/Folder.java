@@ -24,15 +24,11 @@ public class Folder implements Element {
     this.hash = DigestUtils.sha1Hex(content);
   }
 
-
-
   public void addFolder(Folder folder) {
     folders.add(folder);
     content += "tree " + folder.getHashCode() + "\n";
     hash = DigestUtils.sha1Hex(content);
   }
-
-
 
   public void addFile(File file) {
     files.add(file);
@@ -40,37 +36,25 @@ public class Folder implements Element {
     hash = DigestUtils.sha1Hex(content);
   }
 
-
-
   public String getContent() {
     return content;
   }
-
-
 
   public String getHashCode() {
     return hash;
   }
 
-
-
   public String getType() {
     return "tree";
   }
-
-
 
   public List<File> getFiles()  {
     return files;
   }
 
-
-
   public List<Folder> getFolders()  {
     return folders;
   }
-
-
 
   public boolean containsFolder(String folderHash) {
 
@@ -89,8 +73,6 @@ public class Folder implements Element {
     return false;
   }
 
-
-
   public Folder getFolder(String folderHash) {
 
     for (Folder f: folders) {
@@ -107,8 +89,6 @@ public class Folder implements Element {
 
     return null;
   }
-
-
 
   public boolean containsElement(String elementHash) {
 
@@ -132,8 +112,6 @@ public class Folder implements Element {
 
     return false;
   }
-
-
 
   public Element getElement(String elementHash) {
 
@@ -159,8 +137,6 @@ public class Folder implements Element {
     return null;
   }
 
-
-
   public void addToMap(Map map) {
 
     map.put(this.getHashCode(), this.getContent());
@@ -173,8 +149,6 @@ public class Folder implements Element {
       f.addToMap(map);
     }
   }
-
-
 
   public void printElements() {
 

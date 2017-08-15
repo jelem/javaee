@@ -3,7 +3,7 @@ package main.java;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Dialog {
 
@@ -21,50 +21,24 @@ public class Dialog {
   /*
   Vector stores history of commits
   */
-  private Vector<Commit> commits;
-
-
+  private ArrayList<Commit> commits;
 
   public Dialog() {
     this.currentFolder = new Folder();
     this.rootFolder = currentFolder;
     this.commitedFilesMap = new HashMap<>();
-    this.commits = new Vector<>();
+    this.commits = new ArrayList<>();
   }
-
-
 
   void start() {
 
-    String option = "0";
+    showMenuOptions();
 
     Scanner scanner = new Scanner(System.in, "UTF-8");
 
-    System.out.println("Commands:");
-    System.out.println("");
-    System.out.println("Type 'new file' to create new file in a current folder");
-    System.out.println("Type 'new folder' to create new folder in a current folder");
+    String option = "0";
 
-    System.out.println("Type 'current folder' to get current folder hash code");
-    System.out.println("Type 'root folder' to get root folder hash code");
-    System.out.println("Type 'change folder' to go to another folder");
-
-    System.out.println("Type 'commit' to commit files");
-
-    System.out.println("Type 'log' to see history of commits");
-
-    System.out.println("Type 'read not committed element' to read certain element");
-    System.out.println("Type 'read committed element' to read certain committed element");
-
-    System.out.println("Type 'read not committed elements' to read all not committed elements");
-    System.out.println("Type 'read committed elements' to read all committed elements");
-
-    System.out.println("Type 'exit' to exit");
-
-
-    boolean endOfDialog = false;
-
-    while (endOfDialog == false) {
+    while (true) {
 
       System.out.print("> ");
 
@@ -107,20 +81,40 @@ public class Dialog {
           this.readCommittedElements();
           break;
         case "exit":
-          endOfDialog = true;
-          break;
+          return;
         default:
           System.out.println("Incorrect input!");
       }
     }
   }
 
+  void showMenuOptions(){
+    System.out.println("Commands:");
+    System.out.println("");
+    System.out.println("Type 'new file' to create new file in a current folder");
+    System.out.println("Type 'new folder' to create new folder in a current folder");
 
+    System.out.println("Type 'current folder' to get current folder hash code");
+    System.out.println("Type 'root folder' to get root folder hash code");
+    System.out.println("Type 'change folder' to go to another folder");
+
+    System.out.println("Type 'commit' to commit files");
+
+    System.out.println("Type 'log' to see history of commits");
+
+    System.out.println("Type 'read not committed element' to read certain element");
+    System.out.println("Type 'read committed element' to read certain committed element");
+
+    System.out.println("Type 'read not committed elements' to read all not committed elements");
+    System.out.println("Type 'read committed elements' to read all committed elements");
+
+    System.out.println("Type 'exit' to exit");
+  }
 
   void addFile() {
+    System.out.println("Type your text:");
 
     Scanner scanner = new Scanner(System.in, "UTF-8");
-    System.out.println("Type your text:");
 
     String temp = scanner.nextLine();
 
@@ -128,8 +122,6 @@ public class Dialog {
 
     this.currentFolder.addFile((File) file);
   }
-
-
 
   void addFolder() {
 
@@ -140,19 +132,15 @@ public class Dialog {
     System.out.println("New folder created");
   }
 
-
-
   void getCurrentFolder() {
     System.out.println("Current folder " + currentFolder.getHashCode());
   }
 
-
-
   void changeFolder() {
-    Scanner scanner = new Scanner(System.in, "UTF-8");
     System.out.println("Type folder hash code:");
-    String input = scanner.nextLine();
 
+    Scanner scanner = new Scanner(System.in, "UTF-8");
+    String input = scanner.nextLine();
 
     boolean folderExists = rootFolder.containsFolder(input);
 
@@ -165,8 +153,6 @@ public class Dialog {
 
   }
 
-
-
   void changeFolderToRoot() {
 
     currentFolder = rootFolder;
@@ -174,15 +160,13 @@ public class Dialog {
 
   }
 
-
-
   void commit() {
-    Commit commit;
+    System.out.println("Type commit message:");
 
     Scanner scanner = new Scanner(System.in, "UTF-8");
-    System.out.println("Type commit message:");
     String message = scanner.nextLine();
 
+    Commit commit;
 
     if (commits.isEmpty()) {
       commit = new Commit(rootFolder.getHashCode(), message);
@@ -198,8 +182,6 @@ public class Dialog {
 
   }
 
-
-
   void log() {
 
     for (Commit c: commits) {
@@ -209,13 +191,10 @@ public class Dialog {
     }
   }
 
-
-
   void readElement() {
-    Scanner scanner = new Scanner(System.in, "UTF-8");
-
     System.out.println("Type element hash code:");
 
+    Scanner scanner = new Scanner(System.in, "UTF-8");
     String input = scanner.nextLine();
 
     if (rootFolder.getHashCode().equals(input)) {
@@ -230,17 +209,13 @@ public class Dialog {
     }
   }
 
-
-
   void readCommittedElement() {
-    Scanner scanner = new Scanner(System.in, "UTF-8");
-
     System.out.println("Type element hash code:");
 
+    Scanner scanner = new Scanner(System.in, "UTF-8");
     String input = scanner.nextLine();
 
-    for (Map.Entry<String, String> entry: commitedFilesMap.entrySet()) {
-
+    for (Map.Entry<String, String> entry : commitedFilesMap.entrySet()) {
       if (entry.getKey().equals(input)) {
         System.out.println(entry.getValue());
         return;
@@ -251,12 +226,9 @@ public class Dialog {
   }
 
 
-
   void readElements() {
     rootFolder.printElements();
   }
-
-
 
   void readCommittedElements() {
 
