@@ -1,0 +1,19 @@
+<style>
+    a {
+     padding: 10px;
+     background-color: #e3e3ec;
+     display: inline-block;
+     border-radius: 5px;
+    }
+    .book{
+      margin: 10px 0px;
+      border: 1px solid #000;
+      padding: 5px;
+    }
+</style>
+<div>
+  <a href="all">Get all books</a>
+  <a href="search.html">Book search</a>
+  <!--<a href="search/author">Get books by author</a>-->
+  <a href="add.html">Add new book to book storage</a>
+</div>
