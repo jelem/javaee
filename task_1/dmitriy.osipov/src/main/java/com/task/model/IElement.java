@@ -1,17 +1,31 @@
 package com.task.model;
 
-import com.task.exceptions.ElementAlreadyExistsException;
 import com.task.utils.DataUtility;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public interface IElement {
+public interface IElement extends Serializable {
 
-    void addParent(IElementLead element) throws IndexOutOfBoundsException, ElementAlreadyExistsException,
-            IllegalArgumentException;
     Set<? extends IElementLead> getParents();
-    
+
+    String getName();
+
     default String getHash() {
         return DataUtility.getHash(this);
+    }
+
+    default String showParents() {
+        StringBuilder builder = new StringBuilder("");
+        Set<? extends IElementLead> parents = this.getParents();
+        for (IElementLead parent : parents) {
+            builder.append(parent.getHash()).append(";  ");
+        }
+        return (parents.size() > 0) ? builder.toString() : "root";
+    }
+
+    default String getInfo() {
+        return String.format("Type: %s;\\tName: %s;\t\tKey: %s;\t\tParents: %s;",
+                this.getClass().getSimpleName(), this.getName(), this.getHash(), this.showParents());
     }
 }

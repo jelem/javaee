@@ -1,7 +1,5 @@
 package com.task.model;
 
-import com.task.exceptions.ElementAlreadyExistsException;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,11 +7,23 @@ public class Blob implements IElementContent {
 
     private Set<IElementLead> parents;
 
+    private String name = "Blob";
+
     private String content;
 
+    public Blob(IElementLead parent, String... name) {
+        this.addParent(parent);
+        if (name.length > 0) {
+            this.name = name[0];
+        }
+    }
+
     @Override
-    public void addParent(IElementLead element) throws IndexOutOfBoundsException, ElementAlreadyExistsException,
-            IllegalArgumentException {
+    public String getName() {
+        return name;
+    }
+
+    private void addParent(IElementLead element) throws IndexOutOfBoundsException, IllegalArgumentException {
         if (parents == null) {
             parents = new HashSet<>();
         }
@@ -31,12 +41,24 @@ public class Blob implements IElementContent {
     }
 
     @Override
+    public IElementLead getParent() {
+        return parents.stream().findFirst().get();
+    }
+
+    @Override
     public void setContent(String object) {
         content = object;
     }
 
     @Override
-    public String getContent() {
+    public String getContentString() {
         return content;
+    }
+
+    @Override
+    public String getInfo() {
+        return String.format("Type: %s;\t\tName: %s;\t\tKey: %s;\t\tParents: %s;\t\tValue:%s",
+                this.getClass().getSimpleName(), this.getName(), this.getHash(), this.showParents(),
+                this.getContentString());
     }
 }

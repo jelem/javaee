@@ -1,8 +1,7 @@
 package com.task.model;
 
-import com.task.exceptions.ElementAlreadyExistsException;
-
 import javax.naming.OperationNotSupportedException;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -11,6 +10,19 @@ public class Tree implements IElementLead, IElementContent {
 
     private Set<IElementLead> parents;
     private Map<String, IElementContent> contentMap;
+    private String name = "Tree";
+
+    public Tree(IElementLead parent, String... name) {
+        this.addParent(parent);
+        if (name.length > 0) {
+            this.name = name[0];
+        }
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
 
     @Override
     public boolean equals(Object object) {
@@ -28,12 +40,13 @@ public class Tree implements IElementLead, IElementContent {
 
     @Override
     public void addContent(IElementContent content) {
-        this.contentMap.put(content.getHash(), content);
+        if (contentMap == null) {
+            contentMap = new HashMap<>();
+        }
+        contentMap.put(content.getHash(), content);
     }
 
-    @Override
-    public void addParent(IElementLead element) throws IndexOutOfBoundsException, ElementAlreadyExistsException,
-            IllegalArgumentException {
+    private void addParent(IElementLead element) throws IndexOutOfBoundsException, IllegalArgumentException {
         if (parents == null) {
             parents = new HashSet<>();
         }
@@ -43,6 +56,11 @@ public class Tree implements IElementLead, IElementContent {
         if (!parents.contains(element)) {
             parents.add(element);
         }
+    }
+
+    @Override
+    public IElementLead getParent() {
+        return parents.stream().findFirst().get();
     }
 
     @Override

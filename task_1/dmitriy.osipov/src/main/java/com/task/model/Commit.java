@@ -11,6 +11,38 @@ public class Commit implements IElementLead {
 
     private Set<Commit> parents;
     private Map<String, IElementContent> contentMap;
+    private String name = "Commit";
+    private String message;
+
+    public Commit(Commit parent, String message, String... name ) {
+        this.addParent(parent);
+        this.message = message;
+        if (name.length > 0) {
+            this.name = name[0];
+        }
+    }
+
+    public Commit(Commit parentFirst, Commit parentSecond, String message, String... name) {
+        this.addParent(parentFirst);
+        this.addParent(parentSecond);
+        this.message = message;
+        if (name.length > 0) {
+            this.name = name[0];
+        }
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
     @Override
     public boolean equals(Object object) {
@@ -21,11 +53,12 @@ public class Commit implements IElementLead {
         return (this == object) || this.getHash().equals(another.getHash());
     }
 
-    @Override
-    public void addParent(IElementLead element) throws IndexOutOfBoundsException, ElementAlreadyExistsException,
-            IllegalArgumentException {
+    private void addParent(IElementLead element) throws IndexOutOfBoundsException, IllegalArgumentException {
         if (parents == null) {
             parents = new HashSet<>();
+        }
+        if (element == null) {
+            return;
         }
         if (parents.size() == 2) {
             throw new IndexOutOfBoundsException("Commits can't take more than 2 parents");
@@ -54,5 +87,11 @@ public class Commit implements IElementLead {
             contentMap = new HashMap<>();
         }
         this.contentMap.put(content.getHash(), content);
+    }
+
+    @Override
+    public String getInfo() {
+        return String.format("Type: %s;\t\tName: %s;\t\tKey: %s;\t\tParents: %s;\t\tMessage: %s",
+                this.getClass().getSimpleName(), this.getName(), this.getHash(), this.showParents(), this.getMessage());
     }
 }

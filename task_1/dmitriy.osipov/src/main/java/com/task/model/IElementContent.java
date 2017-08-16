@@ -4,6 +4,10 @@ import javax.naming.OperationNotSupportedException;
 
 public interface IElementContent extends IElement {
 
-    Object getContent();
+    default String getContentString() throws OperationNotSupportedException {
+        throw new OperationNotSupportedException();
+    }
     void setContent(String object) throws OperationNotSupportedException;
+
+    IElementLead getParent();
 }
