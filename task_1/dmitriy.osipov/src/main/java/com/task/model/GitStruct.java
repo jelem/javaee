@@ -1,5 +1,7 @@
 package com.task.model;
 
+import com.task.utils.FileSystemUtility;
+
 import java.util.*;
 
 public class GitStruct {
@@ -33,6 +35,13 @@ public class GitStruct {
         getCommitsData(builder, walked, this.commitMap.get(lastKey));
 
         return builder.toString();
+    }
+
+    public void gitSaveCommits() {
+        FileSystemUtility fileSystemUtility = new FileSystemUtility();
+        for (Commit commit : commitMap.values()) {
+            fileSystemUtility.save(commit);
+        }
     }
 
     private void walkOnCommits(StringBuilder builder, Set<Commit> walked, Commit lastCommit) {

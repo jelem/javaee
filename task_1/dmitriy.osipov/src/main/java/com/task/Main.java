@@ -10,6 +10,8 @@ public class Main {
         System.out.println(gitStruct.gitLog());
         System.out.println("--------------------------------------------");
         System.out.println(gitStruct.gitLogAll());
+
+        gitStruct.gitSaveCommits();
     }
 
     private static Commit prepareData(int index, Commit parent) throws Exception {
