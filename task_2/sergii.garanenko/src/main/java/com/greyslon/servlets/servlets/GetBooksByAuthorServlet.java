@@ -1,5 +1,6 @@
 package com.greyslon.servlets.servlets;
 
+import com.greyslon.servlets.container.ObjectsContainer;
 import com.greyslon.servlets.models.Book;
 import com.greyslon.servlets.repositories.BookRepository;
 import com.greyslon.servlets.utils.HtmlContent;
@@ -19,10 +20,17 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/books/search")
 public class GetBooksByAuthorServlet extends HttpServlet {
 
-  private QueryParamGetter paramGetter = new QueryParamGetter();
-  private BookRepository bookRepository = new BookRepository();
-  private HtmlContent htmlContent = new HtmlContent();
-  private HtmlHelper htmlHelper = new HtmlHelper();
+  private QueryParamGetter paramGetter;
+  private BookRepository bookRepository;
+  private HtmlContent htmlContent;
+  private HtmlHelper htmlHelper;
+
+  public GetBooksByAuthorServlet() {
+    bookRepository = ObjectsContainer.getObject(BookRepository.class);
+    htmlContent = ObjectsContainer.getObject(HtmlContent.class);
+    htmlHelper = ObjectsContainer.getObject(HtmlHelper.class);
+    paramGetter = ObjectsContainer.getObject(QueryParamGetter.class);
+  }
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)

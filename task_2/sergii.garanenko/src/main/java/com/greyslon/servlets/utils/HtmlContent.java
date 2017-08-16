@@ -14,8 +14,6 @@ public class HtmlContent implements Serializable {
   public String renderContent(String content) throws IOException {
 
     String template = getTemplate("template.txt");
-
-    template = template.substring(3);
     return template.replace("$RenderBody", content);
   }
 

@@ -1,5 +1,6 @@
 package com.greyslon.servlets.servlets;
 
+import com.greyslon.servlets.container.ObjectsContainer;
 import com.greyslon.servlets.models.Book;
 import com.greyslon.servlets.repositories.BookRepository;
 import com.greyslon.servlets.utils.HtmlContent;
@@ -15,8 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/books/add")
 public class AddBookServlet extends HttpServlet {
 
-  private BookRepository bookRepository = new BookRepository();
-  private HtmlContent htmlContent = new HtmlContent();
+  private BookRepository bookRepository;
+  private HtmlContent htmlContent;
+
+  public AddBookServlet() {
+    bookRepository = ObjectsContainer.getObject(BookRepository.class);
+    htmlContent = ObjectsContainer.getObject(HtmlContent.class);
+  }
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
