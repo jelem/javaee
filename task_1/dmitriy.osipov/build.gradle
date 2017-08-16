@@ -16,30 +16,14 @@ dependencies {
     compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
 }
 
-sourceSets {
-    acceptanceTest {
-        java {
-            srcDir file('../acceptanceTests/src')
-            compileClasspath += main.output
-            runtimeClasspath += main.output
-        }
-    }
-}
-
 configurations {
     acceptanceTestCompile.extendsFrom testCompile
     acceptanceTestRuntime.extendsFrom testRuntime
 }
 
-task acceptanceTest(type: Test) {
-    testClassesDir = project.sourceSets.acceptanceTest.output.classesDir
-    classpath = project.sourceSets.acceptanceTest.runtimeClasspath
-}
-
 checkstyle {
     configFile = rootProject.file('config/checkstyle/checkstyle.xml')
     checkstyleTest.enabled = false
-    checkstyleAcceptanceTest.enabled = false
     toolVersion = '7.1.2'
 }
 
