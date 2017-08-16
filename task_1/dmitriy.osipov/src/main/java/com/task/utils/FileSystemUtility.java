@@ -2,6 +2,8 @@ package com.task.utils;
 
 import com.task.model.IElement;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -28,7 +30,23 @@ public class FileSystemUtility {
     }
     String hash = element.getHash();
     File folder = this.checkFolder(hash);
-    this.saveObject(element, folder.getAbsolutePath().concat("\\").concat(hash));
+    this.saveObject(element, getFileName(folder, hash));
+  }
+
+  public void saveEncrypted(IElement element) {
+    byte[] asBytes = DataUtility.getObjectAsByteArray(element);
+    String hash = element.getHash();
+    File folder = this.checkFolder(hash);
+    byte[] asBytesEncrypted = DigestUtils.sha1(asBytes);
+    try (FileOutputStream outputStream = new FileOutputStream(getFileName(folder, hash))) {
+      outputStream.write(asBytesEncrypted);
+    } catch (IOException ioExc) {
+      ioExc.printStackTrace();
+    }
+  }
+
+  private String getFileName(File folder, String hash) {
+    return folder.getAbsolutePath().concat("\\").concat(hash);
   }
 
   private void saveObject(IElement element, String filename) {

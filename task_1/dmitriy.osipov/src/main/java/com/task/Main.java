@@ -16,6 +16,7 @@ public class Main {
     System.out.println(gitStruct.gitLogAll());
 
     gitStruct.gitSaveCommits();
+    gitStruct.gitSaveToDiffFiles();
   }
 
   private static Commit prepareData(int index, Commit parent) throws Exception {

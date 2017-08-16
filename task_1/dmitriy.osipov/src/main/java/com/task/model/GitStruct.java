@@ -47,6 +47,17 @@ public class GitStruct {
     }
   }
 
+  public void gitSaveToDiffFiles() {
+    FileSystemUtility fileSystemUtility = new FileSystemUtility("resultsDF");
+    Set<IElement> elements = new HashSet<>();
+    for (Commit commit : this.commitMap.values()) {
+      commit.getElements(elements, commit);
+    }
+    for (IElement element : elements) {
+      fileSystemUtility.save(element);
+    }
+  }
+
   private void walkOnCommits(StringBuilder builder, Set<Commit> walked, Commit lastCommit) {
     if (lastCommit == null || walked.contains(lastCommit)) {
       return;

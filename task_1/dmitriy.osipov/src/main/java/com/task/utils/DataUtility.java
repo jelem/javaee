@@ -14,7 +14,7 @@ public class DataUtility {
       try (ObjectOutputStream out = new ObjectOutputStream(baos)) {
         out.writeObject(object);
         hash = DigestUtils.sha1Hex(baos.toByteArray());
-        baos.close();
+        out.close();
       } catch (IOException exc) {
         exc.printStackTrace();
       }
@@ -22,6 +22,22 @@ public class DataUtility {
       exc.printStackTrace();
     }
     return hash;
+  }
+
+  public static byte[] getObjectAsByteArray(Object object) {
+    byte[] result = null;
+    try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+      try (ObjectOutputStream out = new ObjectOutputStream(baos)) {
+        out.writeObject(object);
+        result = baos.toByteArray();
+        out.close();
+      } catch (IOException exc) {
+        exc.printStackTrace();
+      }
+    } catch (IOException exc) {
+      exc.printStackTrace();
+    }
+    return result;
   }
 
 }

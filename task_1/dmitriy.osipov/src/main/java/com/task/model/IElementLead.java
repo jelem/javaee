@@ -31,4 +31,18 @@ public interface IElementLead extends IElement {
     }
     walked.add(lead);
   }
+
+  default void getElements(Set<IElement> walked, IElementLead lead) {
+    if ((lead == null) || walked.contains(lead)) {
+      return;
+    }
+    for (IElement element : lead.getContent().values()) {
+      if (element instanceof Blob) {
+        walked.add(element);
+      } else {
+        getElements(walked, (IElementLead) element);
+      }
+    }
+    walked.add(lead);
+  }
 }
