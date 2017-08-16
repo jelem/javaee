@@ -16,6 +16,7 @@ public class Blob implements IElementContent {
         if (name.length > 0) {
             this.name = name[0];
         }
+        parent.addContent(this);
     }
 
     @Override
@@ -57,7 +58,7 @@ public class Blob implements IElementContent {
 
     @Override
     public String getInfo() {
-        return String.format("Type: %s;\t\tName: %s;\t\tKey: %s;\t\tParents: %s;\t\tValue:%s",
+        return String.format("Type: %10s;\t\tName: %10s;\t\tKey: %s;\t\tParents: %s;\t\tValue:%s",
                 this.getClass().getSimpleName(), this.getName(), this.getHash(), this.showParents(),
                 this.getContentString());
     }

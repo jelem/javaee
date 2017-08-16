@@ -4,35 +4,25 @@ import com.task.model.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        GitStruct gitStruct = Main.prepareData();
+        GitStruct gitStruct = new GitStruct();
+        gitStruct.addCommit(Main.prepareData(1, gitStruct.getLastCommit()));
+        gitStruct.addCommit(Main.prepareData(2, gitStruct.getLastCommit()));
         System.out.println(gitStruct.gitLog());
         System.out.println("--------------------------------------------");
         System.out.println(gitStruct.gitLogAll());
     }
 
-    private static GitStruct prepareData() throws Exception {
-        GitStruct data = new GitStruct();
-        Commit commit = new Commit(null, "Init commit");
-        Tree tree = new Tree(commit);
-        Blob blob = new Blob(tree);
-        blob.setContent("test blob");
-        tree.addContent(blob);
-        commit.addContent(tree);
-        data.addCommit(commit);
+    private static Commit prepareData(int index, Commit parent) throws Exception {
 
-        Tree innerTree = new Tree(tree);
-        tree.addContent(innerTree);
+        Commit c1 = new Commit(parent, "Commit "+ index, "C" + index);
+        Tree t1 = new Tree(c1, String.format("T-%d-1", index));
+        Blob b1 = new Blob(t1, String.format("B-%d-1", index));
+        Tree t2 = new Tree(t1, String.format("T-%d-2", index));
+        Blob b3 = new Blob(c1, String.format("B-%d-3", index));
+        Tree t3 = new Tree(c1, String.format("T-%d-3", index));
+        Blob b2 = new Blob(t3, String.format("B-%d-2", index));
+        Tree t4 = new Tree(t3, String.format("T-%d-4", index));
 
-        Tree commitInnerTree = new Tree(commit);
-        Blob innerCommitTreeBlob = new Blob(commitInnerTree);
-        commitInnerTree.addContent(blob);
-        innerCommitTreeBlob.setContent("another test blob");
-
-        Tree secondInner = new Tree(commitInnerTree);
-
-        Blob commitBlob = new Blob(commit);
-        commit.addContent(commitBlob);
-        commitBlob.setContent("it's under the commit");
-        return data;
+        return c1;
     }
 }

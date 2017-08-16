@@ -17,6 +17,8 @@ public class Tree implements IElementLead, IElementContent {
         if (name.length > 0) {
             this.name = name[0];
         }
+        this.contentMap = new HashMap<>();
+        parent.addContent(this);
     }
 
     @Override
@@ -40,9 +42,6 @@ public class Tree implements IElementLead, IElementContent {
 
     @Override
     public void addContent(IElementContent content) {
-        if (contentMap == null) {
-            contentMap = new HashMap<>();
-        }
         contentMap.put(content.getHash(), content);
     }
 

@@ -31,6 +31,7 @@ public class GitStruct {
         Set<IElementLead> walked = new HashSet<>();
         StringBuilder builder = new StringBuilder();
         getCommitsData(builder, walked, this.commitMap.get(lastKey));
+
         return builder.toString();
     }
 
@@ -49,7 +50,14 @@ public class GitStruct {
         if (walked.contains(lastCommit)) {
             return;
         }
-        lastCommit.showContent(info, walked, lastCommit);
+        walked.add(lastCommit);
+        Set<IElementLead> walkedInner = new HashSet<>();
+        lastCommit.showContent(info, walkedInner, lastCommit);
+        info.append("\n--------------------------------\n");
+        walked.addAll(walkedInner);
+        for (Commit parent : lastCommit.getParents()) {
+            getCommitsData(info, walked, parent);
+        }
         info.append("\n--------------------------------\n");
     }
 }

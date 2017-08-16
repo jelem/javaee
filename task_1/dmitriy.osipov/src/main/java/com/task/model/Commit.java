@@ -15,11 +15,7 @@ public class Commit implements IElementLead {
     private String message;
 
     public Commit(Commit parent, String message, String... name ) {
-        this.addParent(parent);
-        this.message = message;
-        if (name.length > 0) {
-            this.name = name[0];
-        }
+        this(parent, null, message, name);
     }
 
     public Commit(Commit parentFirst, Commit parentSecond, String message, String... name) {
@@ -29,6 +25,7 @@ public class Commit implements IElementLead {
         if (name.length > 0) {
             this.name = name[0];
         }
+        contentMap = new HashMap<>();
     }
 
     @Override
@@ -83,15 +80,12 @@ public class Commit implements IElementLead {
 
     @Override
     public void addContent(IElementContent content) {
-        if (this.contentMap == null) {
-            contentMap = new HashMap<>();
-        }
         this.contentMap.put(content.getHash(), content);
     }
 
     @Override
     public String getInfo() {
-        return String.format("Type: %s;\t\tName: %s;\t\tKey: %s;\t\tParents: %s;\t\tMessage: %s",
+        return String.format("Type: %10s;\t\tName: %10s;\t\tKey: %s;\t\tParents: %s;\t\tMessage: %s",
                 this.getClass().getSimpleName(), this.getName(), this.getHash(), this.showParents(), this.getMessage());
     }
 }

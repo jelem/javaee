@@ -25,7 +25,7 @@ public interface IElement extends Serializable {
     }
 
     default String getInfo() {
-        return String.format("Type: %s;\\tName: %s;\t\tKey: %s;\t\tParents: %s;",
+        return String.format("Type: %10s;\t\tName: %10s;\t\tKey: %s;\t\tParents: %s;",
                 this.getClass().getSimpleName(), this.getName(), this.getHash(), this.showParents());
     }
 }
