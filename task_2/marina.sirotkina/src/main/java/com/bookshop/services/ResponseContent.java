@@ -3,9 +3,12 @@ package com.bookshop.services;
 import static com.bookshop.services.BookDB.getBookList;
 
 import com.bookshop.entity.Book;
+
+import java.io.Serializable;
+
 import java.util.List;
 
-public class ResponseContent {
+public class ResponseContent implements Serializable {
 
   private Book book;
   private BookDB bookDB;
@@ -17,7 +20,7 @@ public class ResponseContent {
     this.book = book;
   }
 
-  public String getHTMLContent() {
+  public String getHtmlContent() {
     bookDB = new BookDB(book);
     bookDB.updateBookList();
     StringBuilder sb = new StringBuilder();
@@ -28,7 +31,7 @@ public class ResponseContent {
     return sb.toString();
   }
 
-  public String getHTMLContent(List<Book> bookList) {
+  public String getHtmlContent(List<Book> bookList) {
     StringBuilder sb = new StringBuilder();
     sb.append(headerContent());
     if (!bookList.isEmpty()) {

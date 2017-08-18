@@ -1,8 +1,10 @@
 package com.bookshop.servlets;
 
 import com.bookshop.services.ResponseContent;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +21,7 @@ public class PrintBooksServlet extends HttpServlet {
       throws ServletException, IOException {
     responseContent = new ResponseContent();
     PrintWriter out = resp.getWriter();
-    out.println(responseContent.getHTMLContent());
+    out.println(responseContent.getHtmlContent());
   }
 
 }

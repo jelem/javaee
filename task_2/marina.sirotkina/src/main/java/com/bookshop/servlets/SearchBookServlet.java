@@ -3,9 +3,12 @@ package com.bookshop.servlets;
 import com.bookshop.entity.Book;
 import com.bookshop.services.BookDB;
 import com.bookshop.services.ResponseContent;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +28,7 @@ public class SearchBookServlet extends HttpServlet {
     responseContent = new ResponseContent();
     author = req.getParameter("author");
     PrintWriter out = resp.getWriter();
-    out.println(responseContent.getHTMLContent(getBookByAuthor()));
+    out.println(responseContent.getHtmlContent(getBookByAuthor()));
   }
 
   private List<Book> getBookByAuthor() {

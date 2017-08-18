@@ -2,8 +2,10 @@ package com.bookshop.servlets;
 
 import com.bookshop.entity.Book;
 import com.bookshop.services.ResponseContent;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -28,7 +30,7 @@ public class AddBookServlet extends HttpServlet {
       author = req.getParameter("author");
       year = req.getParameter("year");
       responseContent = new ResponseContent(getNewBook());
-      out.println(responseContent.getHTMLContent());
+      out.println(responseContent.getHtmlContent());
     } else {
       out.println("<td>Can't create the book</td>");
       out.println("<td>Please enter the text in all fields</td>");
@@ -36,13 +38,13 @@ public class AddBookServlet extends HttpServlet {
   }
 
   private boolean validate(String... parameters) {
-    int i = 0;
+    int count = 0;
     for (String parameter : parameters) {
       if (parameter != null && parameter.length() != 0) {
-        i++;
+        count++;
       }
     }
-    return i == 3;
+    return count == 3;
   }
 
   private Book getNewBook() {

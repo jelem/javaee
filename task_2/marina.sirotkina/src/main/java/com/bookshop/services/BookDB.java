@@ -1,10 +1,13 @@
 package com.bookshop.services;
 
 import com.bookshop.entity.Book;
+
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDB {
+public class BookDB implements Serializable {
 
   private static List<Book> bookList;
 
