@@ -27,9 +27,8 @@ public class AddBookServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-
+    resp.setContentType("text/html;charset=UTF-8");
     PrintWriter writer = resp.getWriter();
-
     Book book = new Book(req.getParameter("author"), req.getParameter("bookName"),
         req.getParameter("published"));
     writer.write(htmlContent.renderNavigation());

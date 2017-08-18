@@ -9,6 +9,7 @@ import com.greyslon.servlets.utils.QueryParamGetter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.Optional;
 import java.util.Set;
 import javax.servlet.ServletException;
@@ -35,9 +36,9 @@ public class GetBooksByAuthorServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    String queryString = req.getQueryString();
+    resp.setContentType("text/html;charset=UTF-8");
     PrintWriter writer = resp.getWriter();
-
+    String queryString = URLDecoder.decode(req.getQueryString(), "UTF-8");
     Optional<String> author = paramGetter.getParam(queryString, "author");
     if (author.isPresent()) {
       Set<Book> books = bookRepository.getBooks(author.get());

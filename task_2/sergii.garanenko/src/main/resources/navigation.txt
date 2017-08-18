@@ -12,8 +12,7 @@
     }
 </style>
 <div>
-  <a href="all">Get all books</a>
-  <a href="search.html">Book search</a>
-  <!--<a href="search/author">Get books by author</a>-->
-  <a href="add.html">Add new book to book storage</a>
+  <a href="all">Все книги</a>
+  <a href="search.html">Поиск книг</a>
+  <a href="add.html">Добавить новую книгу</a>
 </div>

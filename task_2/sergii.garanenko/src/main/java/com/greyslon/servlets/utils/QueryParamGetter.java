@@ -11,7 +11,7 @@ public class QueryParamGetter implements Serializable {
   public Optional<String> getParam(String queryString, String param) {
     Objects.requireNonNull(queryString, "QueryString is required");
 
-    String paramPattern = "(?<=" + param + "=)[^&\\s]+";
+    String paramPattern = "(?<=" + param + "=)[^&]+";
     Pattern pattern = Pattern.compile(paramPattern);
     String value = null;
     Matcher matcher = pattern.matcher(queryString);
