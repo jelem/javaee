@@ -49,7 +49,7 @@ public class BookRepository implements Serializable {
     }
     return bookSet
         .stream()
-        .filter(book -> author.equals(book.getAuthor()))
+        .filter(book -> author.toLowerCase().equals(book.getAuthor().toLowerCase()))
         .collect(Collectors.toSet());
   }
 }
