@@ -37,22 +37,27 @@ public class GetBooksByAuthorServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     resp.setContentType("text/html;charset=UTF-8");
-    PrintWriter writer = resp.getWriter();
     String queryString = URLDecoder.decode(req.getQueryString(), "UTF-8");
     Optional<String> author = paramGetter.getParam(queryString, "author");
-    if (author.isPresent()) {
-      Set<Book> books = bookRepository.getBooks(author.get());
-      writer.write(htmlContent.renderNavigation());
-      if (books.isEmpty()) {
-        writer
-            .write(htmlContent.renderContent("Nothing was found by the author - " + author.get()));
-      } else {
-        for (Book book : books) {
-          writer.write(htmlContent.renderContent(htmlHelper.divWrap(book.toString(), "book")));
-        }
-      }
-    } else {
+    createResponse(resp, author);
+  }
+
+  private void createResponse(HttpServletResponse resp, Optional<String> author)
+      throws IOException {
+    PrintWriter writer = resp.getWriter();
+    writer.write(htmlContent.renderNavigation());
+    if (!author.isPresent()) {
       writer.write(htmlContent.renderContent("No author was selected"));
+      return;
+    }
+
+    Set<Book> books = bookRepository.getBooks(author.get());
+    if (books.isEmpty()) {
+      writer.write(htmlContent.renderContent("Nothing was found by " + author.get()));
+    } else {
+      for (Book book : books) {
+        writer.write(htmlContent.renderContent(htmlHelper.divWrap(book.toString(), "book")));
+      }
     }
   }
 }

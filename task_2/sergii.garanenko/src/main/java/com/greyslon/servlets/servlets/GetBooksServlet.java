@@ -32,9 +32,14 @@ public class GetBooksServlet extends HttpServlet {
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
     resp.setContentType("text/html;charset=UTF-8");
+    createResponse(resp);
+  }
+
+  private void createResponse(HttpServletResponse resp) throws IOException {
     PrintWriter writer = resp.getWriter();
-    Set<Book> books = bookRepository.getBooks();
     writer.write(htmlContent.renderNavigation());
+
+    Set<Book> books = bookRepository.getBooks();
     if (books.isEmpty()) {
       writer.write("No books found");
     } else {
