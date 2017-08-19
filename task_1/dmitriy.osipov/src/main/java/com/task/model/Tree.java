@@ -6,17 +6,15 @@ import java.util.Map;
 import java.util.Set;
 import javax.naming.OperationNotSupportedException;
 
-public class Tree implements IElementLead, IElementContent {
+public class Tree implements ElementLead, ElementContent {
 
-  private Set<IElementLead> parents;
-  private Map<String, IElementContent> contentMap;
-  private String name = "Tree";
+  private Set<ElementLead> parents;
+  private Map<String, ElementContent> contentMap;
+  private String name;
 
-  public Tree(IElementLead parent, String... name) {
+  public Tree(ElementLead parent, String... name) {
     this.addParent(parent);
-    if (name.length > 0) {
-      this.name = name[0];
-    }
+    this.name = (name.length > 0) ? name[0] : "Tree";
     this.contentMap = new HashMap<>();
     parent.addContent(this);
   }
@@ -41,11 +39,11 @@ public class Tree implements IElementLead, IElementContent {
   }
 
   @Override
-  public Map<String, IElementContent> getContent() {
+  public Map<String, ElementContent> getContent() {
     return this.contentMap;
   }
 
-  private void addParent(IElementLead element)
+  private void addParent(ElementLead element)
       throws IndexOutOfBoundsException, IllegalArgumentException {
     if (parents == null) {
       parents = new HashSet<>();
@@ -59,12 +57,12 @@ public class Tree implements IElementLead, IElementContent {
   }
 
   @Override
-  public IElementLead getParent() {
-    return parents.stream().findFirst().get();
+  public ElementLead getParent() {
+    return parents.stream().findFirst().orElse(null);
   }
 
   @Override
-  public Set<IElementLead> getParents() {
+  public Set<ElementLead> getParents() {
     return parents;
   }
 

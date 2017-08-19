@@ -5,11 +5,11 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Commit implements IElementLead {
+public class Commit implements ElementLead {
 
   private Set<Commit> parents;
-  private Map<String, IElementContent> contentMap;
-  private String name = "Commit";
+  private Map<String, ElementContent> contentMap;
+  private String name;
   private String message;
 
   public Commit(Commit parent, String message, String... name) {
@@ -20,9 +20,7 @@ public class Commit implements IElementLead {
     this.addParent(parentFirst);
     this.addParent(parentSecond);
     this.message = message;
-    if (name.length > 0) {
-      this.name = name[0];
-    }
+    this.name = (name.length > 0) ? name[0] : "Commit";
     contentMap = new HashMap<>();
   }
 
@@ -53,7 +51,7 @@ public class Commit implements IElementLead {
     return this.getHash().hashCode();
   }
 
-  private void addParent(IElementLead element)
+  private void addParent(ElementLead element)
       throws IndexOutOfBoundsException, IllegalArgumentException {
     if (parents == null) {
       parents = new HashSet<>();
@@ -79,7 +77,7 @@ public class Commit implements IElementLead {
   }
 
   @Override
-  public Map<String, IElementContent> getContent() {
+  public Map<String, ElementContent> getContent() {
     return this.contentMap;
   }
 

@@ -3,19 +3,17 @@ package com.task.model;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Blob implements IElementContent {
+public class Blob implements ElementContent {
 
-  private Set<IElementLead> parents;
+  private Set<ElementLead> parents;
 
-  private String name = "Blob";
+  private String name;
 
   private String content;
 
-  public Blob(IElementLead parent, String... name) {
+  public Blob(ElementLead parent, String... name) {
     this.addParent(parent);
-    if (name.length > 0) {
-      this.name = name[0];
-    }
+    this.name = (name.length > 0) ? name[0] : "Blob";
     parent.addContent(this);
   }
 
@@ -24,7 +22,7 @@ public class Blob implements IElementContent {
     return name;
   }
 
-  private void addParent(IElementLead element)
+  private void addParent(ElementLead element)
       throws IndexOutOfBoundsException, IllegalArgumentException {
     if (parents == null) {
       parents = new HashSet<>();
@@ -38,12 +36,12 @@ public class Blob implements IElementContent {
   }
 
   @Override
-  public Set<IElementLead> getParents() {
+  public Set<ElementLead> getParents() {
     return parents;
   }
 
   @Override
-  public IElementLead getParent() {
+  public ElementLead getParent() {
     return parents.stream().findFirst().get();
   }
 

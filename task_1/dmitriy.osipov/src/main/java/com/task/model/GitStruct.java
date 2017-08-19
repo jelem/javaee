@@ -33,7 +33,7 @@ public class GitStruct {
   }
 
   public String gitLogAll() {
-    Set<IElementLead> walked = new HashSet<>();
+    Set<ElementLead> walked = new HashSet<>();
     StringBuilder builder = new StringBuilder();
     getCommitsData(builder, walked, this.commitMap.get(lastKey));
 
@@ -49,11 +49,11 @@ public class GitStruct {
 
   public void gitSaveToDiffFiles() {
     FileSystemUtility fileSystemUtility = new FileSystemUtility("resultsDF");
-    Set<IElement> elements = new HashSet<>();
+    Set<Element> elements = new HashSet<>();
     for (Commit commit : this.commitMap.values()) {
       commit.getElements(elements, commit);
     }
-    for (IElement element : elements) {
+    for (Element element : elements) {
       fileSystemUtility.save(element);
     }
   }
@@ -69,12 +69,12 @@ public class GitStruct {
     }
   }
 
-  private void getCommitsData(StringBuilder info, Set<IElementLead> walked, Commit lastCommit) {
+  private void getCommitsData(StringBuilder info, Set<ElementLead> walked, Commit lastCommit) {
     if (walked.contains(lastCommit)) {
       return;
     }
     walked.add(lastCommit);
-    Set<IElementLead> walkedInner = new HashSet<>();
+    Set<ElementLead> walkedInner = new HashSet<>();
     lastCommit.showContent(info, walkedInner, lastCommit);
     info.append("\n--------------------------------\n");
     walked.addAll(walkedInner);

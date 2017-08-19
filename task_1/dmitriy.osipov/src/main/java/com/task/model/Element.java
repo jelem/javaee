@@ -5,9 +5,9 @@ import com.task.utils.DataUtility;
 import java.io.Serializable;
 import java.util.Set;
 
-public interface IElement extends Serializable {
+public interface Element extends Serializable {
 
-  Set<? extends IElementLead> getParents();
+  Set<? extends ElementLead> getParents();
 
   String getName();
 
@@ -17,8 +17,8 @@ public interface IElement extends Serializable {
 
   default String showParents() {
     StringBuilder builder = new StringBuilder("");
-    Set<? extends IElementLead> parents = this.getParents();
-    for (IElementLead parent : parents) {
+    Set<? extends ElementLead> parents = this.getParents();
+    for (ElementLead parent : parents) {
       builder.append(parent.getHash()).append(";  ");
     }
     return (parents.size() > 0) ? builder.toString() : "root";
