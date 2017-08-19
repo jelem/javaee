@@ -1,9 +1,9 @@
 package main.java;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class Dialog {
 
@@ -88,7 +88,7 @@ public class Dialog {
     }
   }
 
-  void showMenuOptions(){
+  void showMenuOptions() {
     System.out.println("Commands:");
     System.out.println("");
     System.out.println("Type 'new file' to create new file in a current folder");
