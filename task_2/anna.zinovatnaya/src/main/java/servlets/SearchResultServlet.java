@@ -1,3 +1,5 @@
+import org.owasp.esapi.ESAPI;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -17,7 +19,7 @@ public class SearchResultServlet extends HttpServlet {
       throws ServletException, IOException {
     PrintWriter out = resp.getWriter();
 
-    String author = req.getParameter("author");
+    String author = ESAPI.encoder().canonicalize(req.getParameter("author"));
 
     out.println("<html>");
     out.println("<body>");

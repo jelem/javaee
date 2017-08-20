@@ -1,3 +1,5 @@
+import org.owasp.esapi.ESAPI;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -15,9 +17,9 @@ public class AddBookResultServlet extends HttpServlet {
       throws ServletException, IOException {
     PrintWriter out = resp.getWriter();
 
-    String name = req.getParameter("name");
-    String author = req.getParameter("author");
-    String year = req.getParameter("year");
+    String name = ESAPI.encoder().canonicalize(req.getParameter("name"));
+    String author = ESAPI.encoder().canonicalize(req.getParameter("author"));
+    String year = ESAPI.encoder().canonicalize(req.getParameter("year"));
 
     out.println("<html>");
     out.println("<body>");
