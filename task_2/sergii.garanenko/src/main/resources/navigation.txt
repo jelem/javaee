@@ -1,0 +1,18 @@
+<style>
+    a {
+     padding: 10px;
+     background-color: #e3e3ec;
+     display: inline-block;
+     border-radius: 5px;
+    }
+    .book{
+      margin: 10px 0px;
+      border: 1px solid #000;
+      padding: 5px;
+    }
+</style>
+<div>
+  <a href="all">Все книги</a>
+  <a href="search.html">Поиск книг</a>
+  <a href="add.html">Добавить новую книгу</a>
+</div>
