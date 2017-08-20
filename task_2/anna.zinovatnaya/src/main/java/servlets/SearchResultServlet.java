@@ -1,5 +1,3 @@
-import java.util.List;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -9,12 +7,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.util.List;
+
 @WebServlet("/books/search/author")
 public class SearchResultServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-    throws ServletException, IOException {
+      throws ServletException, IOException {
     PrintWriter out = resp.getWriter();
 
     String author = req.getParameter("author");
@@ -23,8 +23,8 @@ public class SearchResultServlet extends HttpServlet {
     out.println("<body>");
     out.println("Author: " + author);
     List<Book> books = BooksDB.getBooks();
-    if(!books.isEmpty()){
-      for(Book b : books) {
+    if (!books.isEmpty()) {
+      for (Book b : books) {
         out.println("<p>");
         out.println(b.getName() + " " + b.getAuthor() + " " + b.getYear());
         out.println("</p>");

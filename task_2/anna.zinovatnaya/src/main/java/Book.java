@@ -1,7 +1,4 @@
 class Book {
-  private String name;
-  private String author;
-  private String year;
 
   public Book(String name, String author, String year) {
     this.name = name;
@@ -21,4 +18,7 @@ class Book {
     return year;
   }
 
+  private String name;
+  private String author;
+  private String year;
 }

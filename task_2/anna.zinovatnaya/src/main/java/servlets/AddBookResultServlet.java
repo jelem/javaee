@@ -12,7 +12,7 @@ public class AddBookResultServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-    throws ServletException, IOException {
+      throws ServletException, IOException {
     PrintWriter out = resp.getWriter();
 
     String name = req.getParameter("name");
