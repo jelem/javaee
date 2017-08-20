@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Search page</title>
+  <link href="../css/book.css" rel="stylesheet">
+</head>
+<body>
+<nav>
+  <a href="../books/all">Все книги</a>
+  <a href="search.html">Поиск книг</a>
+  <!--<a href="../books/search/author">Get books by author</a>-->
+  <a href="#">Добавить новую книгу</a>
+</nav>
+<div>
+  <h1>Book store</h1>
+  <form action="../books/add" method="post">
+    <input name="author" type="text" placeholder="Author name">
+    <input name="bookName" type="text" placeholder="Book name">
+    <input name="published" type="text" placeholder="Published">
+    <button type="submit">Search</button>
+  </form>
+</div>
+</body>
+</html>
