@@ -3,13 +3,13 @@ import java.util.List;
 
 class BooksDB {
 
-  static public List<Book> getBooks() {
+  public static List<Book> getBooks() {
     return books;
   }
 
-  static public void add(Book book) {
+  public static void add(Book book) {
     books.add(book);
   }
   
-  static private List<Book> books = new ArrayList<>();
+ private static List<Book> books = new ArrayList<>();
 }
