@@ -1,7 +1,5 @@
 package com.servlets;
 
-import com.book.Book;
-import com.book.BooksDB;
 import com.book.IBookDB;
 
 import javax.servlet.ServletException;

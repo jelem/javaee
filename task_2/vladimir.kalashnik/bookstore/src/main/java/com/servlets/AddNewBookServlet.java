@@ -54,5 +54,6 @@ public class AddNewBookServlet extends HttpServlet implements IBookDB {
 
         IBookDB.getBookDB().addBook(bookName, author, dateOfPublishing);
         resp.sendRedirect(req.getContextPath());
+
     }
 }
