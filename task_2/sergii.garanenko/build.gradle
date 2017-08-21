@@ -1,0 +1,12 @@
+apply plugin: 'java'
+apply plugin: 'war'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+
+repositories{
+    jcenter()
+}
+
+dependencies{
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.8.0'
+}
