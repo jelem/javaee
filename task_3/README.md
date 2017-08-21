@@ -2,7 +2,7 @@
 
 Создайте дизайн вашего магазина как показано на картинке:
 
-![alt text](https://github.com/jelem/javaee/tree/master/task_3/mock.png "Book Shop Mockup")
+![Book Shop Mockup](mock.png "Book Shop Mockup")
 
 Для общего расположения элементов используйте CSS Grid элемент.
 Для списка меню и списка книг используйте Flexbox.
