@@ -1,0 +1,62 @@
+<HTML>
+<Head>
+  <Title>Bookshop</Title>
+</Head>
+<p align="center">
+<h1>Hello! Here You can do next:</h1>
+<table border="1">
+  <tr>
+    <td>View a list of all books</td>
+    <td><a href="/bookshop/servlet/allbooks">Click here</a></td>
+  </tr>
+  <tr>
+    <td>Find a book:</td>
+    <td>
+      <table>
+        <tr>
+          <td>By author</td>
+          <td>
+            <form action="/bookshop/servlet/find/author" method="get">
+              <input type="text" name="author"></br>
+              <input type="submit" value="Search">
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <td>By Title</td>
+          <td>
+            <form action="/bookshop/servlet/find/title" method="get">
+              <input type="text" name="title"></br>
+              <input type="submit" value="Search">
+            </form>
+          </td>
+        </tr>
+        <tr>
+          <td>By year</td>
+          <td>
+            <form action="/bookshop/servlet/find/year" method="get">
+              <input type="number" name="year" value="2017"></br>
+              <input type="submit" value="Search">
+            </form>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td>Add new book</td>
+    <td>
+      <form action="/bookshop/servlet/newbook" method="post">
+        <table>
+          <tr><td>Author:</td><td><input type="text" name="author"></td></tr>
+          <tr><td>Title:</td><td><input type="text" name="title"></td></tr>
+          <tr><td>Year:</td><td><input type="number" name="year" value="2017"></td></tr>
+        </table>
+          <input type="submit" value="Add">
+      </form>
+    </td>
+  </tr>
+</table>
+</p>
+</body>
+</HTML>
