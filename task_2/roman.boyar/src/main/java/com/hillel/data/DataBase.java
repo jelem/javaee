@@ -4,9 +4,11 @@ import com.hillel.objects.Book;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Map;
@@ -15,7 +17,7 @@ import java.util.TreeMap;
 public class DataBase {
 
   private TreeMap<String, Book> bookList = new TreeMap();
-  private final String fileName = "books.txt";
+  final String fileName = "books.txt";
 
   private static DataBase dataBase;
 
@@ -38,8 +40,10 @@ public class DataBase {
 
     TreeMap<String, Book> bookListOut = new TreeMap();
     ClassLoader classLoader = getClass().getClassLoader();
-    BufferedReader bufferedReader = new BufferedReader(
-        new FileReader(classLoader.getResource(fileName).getFile()));
+    BufferedReader bufferedReader =
+        new BufferedReader(
+            new InputStreamReader(new FileInputStream(classLoader.getResource(fileName).getFile()),
+                "UTF-8"));
     String str = "";
 
     while ((str = bufferedReader.readLine()) != null) {
@@ -90,7 +94,8 @@ public class DataBase {
     fillCycleBookListWithKeyByName(bookListOut);
     Boolean writtedFlag = false;
 
-    BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("books2.txt"));
+    BufferedWriter bufferedWriter =
+        new BufferedWriter(new OutputStreamWriter(new FileOutputStream("books2.txt"), "UTF-8"));
     String str = "";
 
     for (Map.Entry<String, Book> bookEntryForWritting : bookListOut.entrySet()) {
@@ -99,7 +104,7 @@ public class DataBase {
           + ":" + bookEntryForWritting.getValue().getBookPublishYear();
       bufferedWriter.write(str);
     }
-
+    bufferedWriter.close();
     return writtedFlag;
   }
 

@@ -38,10 +38,10 @@ public class Book {
 
   @Override
   public String toString() {
-    return "Book{" +
-        "bookName='" + bookName + '\'' +
-        ", bookAuthor='" + bookAuthor + '\'' +
-        ", bookPublishYear='" + bookPublishYear + '\'' +
-        '}';
+    return "Book{"
+        + "bookName='" + bookName + '\''
+        + ", bookAuthor='" + bookAuthor + '\''
+        + ", bookPublishYear='" + bookPublishYear + '\''
+        + '}';
   }
 }

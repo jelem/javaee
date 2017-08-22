@@ -28,23 +28,23 @@ public class Utils {
   public void display(PrintWriter writer, TreeMap<String, Book> mapBooks) throws IOException {
 
     writer.println("<html>");
-    writer.println("<head>\n" +
-        "  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n" +
-        "  <title>Таблица</title>\n" +
-        "  <style type=\"text/css\">\n" +
-        "   TABLE {\n" +
-        "    width: 600px; /* Ширина таблицы */\n" +
-        "    border-collapse: collapse; /* Убираем двойные линии между ячейками */\n" +
-        "   }\n" +
-        "   TD, TH {\n" +
-        "    padding: 5px; /* Поля вокруг содержимого таблицы */\n" +
-        "    border: 1px solid black; /* Параметры рамки */\n" +
-        "   }\n" +
-        "   TH {\n" +
-        "    background: #b0e0e6; /* Цвет фона */\n" +
-        "   }\n" +
-        "  </style>\n" +
-        " </head>");
+    writer.println("<head>\n"
+        + "  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n"
+        + "  <title>Таблица</title>\n"
+        + "  <style type=\"text/css\">\n"
+        + "   TABLE {\n"
+        + "    width: 600px; /* Ширина таблицы */\n"
+        + "    border-collapse: collapse; /* Убираем двойные линии между ячейками */\n"
+        + "   }\n"
+        + "   TD, TH {\n"
+        + "    padding: 5px; /* Поля вокруг содержимого таблицы */\n"
+        + "    border: 1px solid black; /* Параметры рамки */\n"
+        + "   }\n"
+        + "   TH {\n"
+        + "    background: #b0e0e6; /* Цвет фона */\n"
+        + "   }\n"
+        + "  </style>\n"
+        + " </head>");
     writer.println("<form><table><tr>");
     writer.println("<td><center><b>№</b></center></td>");
     writer.println("<td><center><b>Имя книги</b></center></td>");
@@ -78,9 +78,9 @@ public class Utils {
       throws IOException {
 
     boolean addedNewFlag = false;
-    String newBookName = request.getParameter("newbookname"),
-        newBookAuthor = request.getParameter("newbookauthor"),
-        newBookYear = request.getParameter("newbookyear");
+    String newBookName = request.getParameter("newbookname");
+    String newBookAuthor = request.getParameter("newbookauthor");
+    String newBookYear = request.getParameter("newbookyear");
 
     TreeMap<String, Book> treeMapOfAddedValue = new TreeMap();
     treeMapOfAddedValue.put(newBookName, new Book(newBookName, newBookAuthor, newBookYear));
