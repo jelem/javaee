@@ -18,23 +18,24 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/search/author")
 public class ShowAuthorServlet extends HttpServlet {
 
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+  @Override
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
 
-        resp.setContentType("text/html; charset=UTF-8");
-        PrintWriter writer = resp.getWriter();
-        req.setCharacterEncoding("UTF-8");
-        String authorRequest = req.getParameter("authorname").trim();
-        TreeMap<String, Book> authorBooks = DataBase.getInstance().findBooksOwnerAuthor(authorRequest);
+    resp.setContentType("text/html; charset=UTF-8");
+    PrintWriter writer = resp.getWriter();
+    req.setCharacterEncoding("UTF-8");
+    String authorRequest = req.getParameter("authorname").trim();
+    TreeMap<String, Book> authorBooks = DataBase.getInstance().findBooksOwnerAuthor(authorRequest);
 
-        if (authorBooks.size() ==1 && authorBooks.containsKey("Empty_MAP")) {
-            writer.println("К сожалению, по Вашему запросу не найдено ни одной книги!!!<br>");
-            writer.println("Ваш запрос по автору: <strong>" + authorRequest+"</strong");
-        } else {
-             Utils.getInstance().display(writer, authorBooks);
-        }
-
-        writer.close();
-
+    if (authorBooks.size() == 1 && authorBooks.containsKey("Empty_MAP")) {
+      writer.println("К сожалению, по Вашему запросу не найдено ни одной книги!!!<br>");
+      writer.println("Ваш запрос по автору: <strong>" + authorRequest + "</strong");
+    } else {
+      Utils.getInstance().display(writer, authorBooks);
     }
+
+    writer.close();
+
+  }
 }
