@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @WebServlet("/context")
-public class IndexHtmlServlet extends HttpServlet {
+public class MyIndexHtmlServlet extends HttpServlet {
 
 
   @Override
