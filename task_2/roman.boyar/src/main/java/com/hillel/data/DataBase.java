@@ -17,7 +17,7 @@ import java.util.TreeMap;
 public class DataBase {
 
   private TreeMap<String, Book> bookList = new TreeMap();
-  final String fileName = "books.txt";
+  public static final String FILENAME = "books.txt";
 
   private static DataBase dataBase;
 
@@ -42,7 +42,7 @@ public class DataBase {
     ClassLoader classLoader = getClass().getClassLoader();
     BufferedReader bufferedReader =
         new BufferedReader(
-            new InputStreamReader(new FileInputStream(classLoader.getResource(fileName).getFile()),
+            new InputStreamReader(new FileInputStream(classLoader.getResource(FILENAME).getFile()),
                 "UTF-8"));
     String str = "";
 
@@ -95,7 +95,7 @@ public class DataBase {
     Boolean writtedFlag = false;
 
     BufferedWriter bufferedWriter =
-        new BufferedWriter(new OutputStreamWriter(new FileOutputStream("books2.txt"), "UTF-8"));
+        new BufferedWriter(new OutputStreamWriter(new FileOutputStream(FILENAME), "UTF-8"));
     String str = "";
 
     for (Map.Entry<String, Book> bookEntryForWritting : bookListOut.entrySet()) {

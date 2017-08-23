@@ -4,6 +4,8 @@ import com.hillel.data.DataBase;
 import com.hillel.objects.Book;
 import com.hillel.servlets.utils.Utils;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.TreeMap;
@@ -19,13 +21,13 @@ import javax.servlet.http.HttpServletResponse;
 public class ShowAuthorServlet extends HttpServlet {
 
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+  protected void doPost(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
 
     resp.setContentType("text/html; charset=UTF-8");
     PrintWriter writer = resp.getWriter();
     req.setCharacterEncoding("UTF-8");
-    String authorRequest = req.getParameter("authorname").trim();
+    String authorRequest = StringEscapeUtils.escapeHtml4(req.getParameter("authorname").trim());
     TreeMap<String, Book> authorBooks = DataBase.getInstance().findBooksOwnerAuthor(authorRequest);
 
     if (authorBooks.size() == 1 && authorBooks.containsKey("Empty_MAP")) {
