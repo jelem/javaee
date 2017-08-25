@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Добавление новой книги</title>
+</head>
+<body>
+
+<form method="get" title="addnewbook" action="/bookstore/newbook/item">
+  <p>
+  <h1>Пожалуйста,заполните все поля формы</h1>
+  <h2>&laquo;Добавление новой книги&raquo;</h2></p>
+  <p><input type="text" id="newbookname" name="newbookname" placeholder="Название книги"></p>
+  <p><input type="text" id="newbookauthorname" name="newbookauthor" placeholder="Автор книги"></p>
+  <p><input type="text" id="newbookpublishyear" name="newbookyear"
+            placeholder="Год публикации книги"
+            onkeydown="javascript:return( (event.keyCode>7) && (event.keyCode<58) ||
+            (event.keyCode>95) && (event.keyCode<106) )"></p>
+  <p><input type="submit" value="Добавить"></p>
+</form>
+
+</body>
+</html>
