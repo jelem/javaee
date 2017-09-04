@@ -15,7 +15,7 @@
     </body>
 </html>
 ```
-Для того, чтобы получить значение в base64 вы можете использовать следующий код:
+Для того, чтобы получить значение в base64, вы можете использовать следующий код:
 ```java
 public void retrievePhotoInBase64() throws SQLException, IOException {
     String sql = "select photo from students where id = 2";
