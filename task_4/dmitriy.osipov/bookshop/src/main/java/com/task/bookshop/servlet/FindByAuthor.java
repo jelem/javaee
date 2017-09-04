@@ -3,7 +3,6 @@ package com.task.bookshop.servlet;
 import com.task.bookshop.repository.BeansContainer;
 import com.task.bookshop.repository.BookRepository;
 import com.task.bookshop.repository.BookRepositoryImpl;
-import com.task.bookshop.utils.HtmlPagePreparer;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -21,11 +20,9 @@ public class FindByAuthor extends HttpServlet {
   private static final long serialVersionUID = 170820030001L;
 
   private transient BookRepository bookRepository;
-  private transient HtmlPagePreparer pagePreparer;
 
   public FindByAuthor() {
     bookRepository = BeansContainer.getBean(BookRepositoryImpl.class);
-    pagePreparer = BeansContainer.getBean(HtmlPagePreparer.class);
   }
 
   @Override
@@ -45,11 +42,5 @@ public class FindByAuthor extends HttpServlet {
         new String(title.getBytes(Charset.defaultCharset()), Charset.forName("UTF-8")));
     RequestDispatcher dispatcher = req.getRequestDispatcher("/jsp/booklist.jsp");
     dispatcher.forward(req, resp);
-    /*
-    String author = req.getParameter("author");
-    PrintWriter writer = resp.getWriter();
-    writer.write(pagePreparer.prepareForTable(String.format("Books written by %s", author),
-        bookRepository.findAllByAuthorLike(author)));
-    */
   }
 }

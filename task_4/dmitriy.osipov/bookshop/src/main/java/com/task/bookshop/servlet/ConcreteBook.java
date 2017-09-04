@@ -3,10 +3,8 @@ package com.task.bookshop.servlet;
 import com.task.bookshop.repository.BeansContainer;
 import com.task.bookshop.repository.BookRepository;
 import com.task.bookshop.repository.BookRepositoryImpl;
-import com.task.bookshop.utils.HtmlPagePreparer;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,11 +19,9 @@ public class ConcreteBook extends HttpServlet {
   private static final long serialVersionUID = 170820030000L;
 
   private transient BookRepository bookRepository;
-  private transient HtmlPagePreparer pagePreparer;
 
   public ConcreteBook() {
     bookRepository = BeansContainer.getBean(BookRepositoryImpl.class);
-    pagePreparer = BeansContainer.getBean(HtmlPagePreparer.class);
   }
 
   @Override

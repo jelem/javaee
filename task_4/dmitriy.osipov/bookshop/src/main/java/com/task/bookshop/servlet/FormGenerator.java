@@ -5,8 +5,6 @@ import com.task.bookshop.model.Book;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.nio.charset.Charset;
-import java.util.Arrays;
-import java.util.Optional;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

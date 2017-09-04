@@ -1,13 +1,10 @@
 package com.task.bookshop.servlet;
 
-import com.task.bookshop.model.Book;
 import com.task.bookshop.repository.BeansContainer;
 import com.task.bookshop.repository.BookRepository;
 import com.task.bookshop.repository.BookRepositoryImpl;
-import com.task.bookshop.utils.HtmlPagePreparer;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.Charset;
 
 import javax.servlet.RequestDispatcher;
@@ -24,11 +21,8 @@ public class FindByYear extends HttpServlet {
 
   private transient BookRepository bookRepository;
 
-  private transient HtmlPagePreparer pagePreparer;
-
   public FindByYear() {
     bookRepository = BeansContainer.getBean(BookRepositoryImpl.class);
-    pagePreparer = BeansContainer.getBean(HtmlPagePreparer.class);
   }
 
   @Override

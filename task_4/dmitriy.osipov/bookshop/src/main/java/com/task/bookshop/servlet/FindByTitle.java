@@ -1,13 +1,10 @@
 package com.task.bookshop.servlet;
 
-import com.task.bookshop.model.Book;
 import com.task.bookshop.repository.BeansContainer;
 import com.task.bookshop.repository.BookRepository;
 import com.task.bookshop.repository.BookRepositoryImpl;
-import com.task.bookshop.utils.HtmlPagePreparer;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.charset.Charset;
 
 import javax.servlet.RequestDispatcher;
@@ -23,11 +20,9 @@ public class FindByTitle extends HttpServlet {
   private static final long serialVersionUID = 170820030002L;
 
   private transient BookRepository bookRepository;
-  private transient HtmlPagePreparer pagePreparer;
 
   public FindByTitle() {
     bookRepository = BeansContainer.getBean(BookRepositoryImpl.class);
-    pagePreparer = BeansContainer.getBean(HtmlPagePreparer.class);
   }
 
   @Override
