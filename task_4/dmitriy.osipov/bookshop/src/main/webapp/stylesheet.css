@@ -1,0 +1,222 @@
+body, html {
+  font-size: 10px;
+  background-color: linen;
+}
+
+body {
+  font-size: 1.4rem;
+}
+
+h1 {
+  font-size: 2.4rem;
+}
+
+td {
+	word-wrap: inherit;
+}
+
+#logo {
+	width: 7.5rem;
+	height: 7.5rem;
+	float: left;
+	margin-right: 1rem;
+}
+
+#headText {
+	font-size: 3rem;
+  font-style: oblique;
+	color: gold;
+	text-align: center;
+}
+
+.menu {
+  font-size: 2rem;
+  list-style-type: none;
+}
+
+.menu a {
+  text-decoration: none;
+  color: black;
+}
+
+.menu li:hover {
+  background-color: burlywood;
+  text-align: center;
+}
+
+
+.warning {
+  font-size: 3rem;
+  color: darkred;
+  align-items: center;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns:
+    /* 1 */ 25rem;
+    /* 2 */ 1fr;
+  grid-template-rows:
+    /* 1 */ 8rem;
+    /* 2 */ 1fr;
+    /* 3 */ 1rem;
+}
+
+/* Specify the position of each grid item using coordinates on
+ * the 'grid-row' and 'grid-column' properties of each grid item.
+ */
+.logoSect {
+	grid-area: logoSect;
+	grid-column: 1 / span 2; 
+	grid-row: 1; 
+	//border-bottom: inset;
+}
+
+.menuSect    { 
+	grid-area:menuSect;
+	grid-column: 1; 
+	grid-row: 2; 
+	align-items: center; 
+	margin-right: 0.5rem;
+	flex-direction: column;
+	flex-wrap: wrap;
+}
+.mainSect    { 
+	grid-area: mainSect;
+	grid-column: 2; 
+	grid-row: 2; 
+	margin-left: 2rem;
+	text-align:center;
+}
+	
+.footerSect {
+	grid-area: footerSect;
+	grid-column: 1 / span 2; 
+	grid-row: 3; 
+	align-self: center; 
+	text-align:center;
+}
+
+.menuSect, .mainSect, .booksContainer {
+	display: flex;
+}
+
+.mainSect {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.booksContainer {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.bookItem {
+  margin: 1rem;
+  border: solid chocolate;
+  width: 20rem;
+  height: 20rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-self: start;
+}
+
+.bookEntry {
+
+}
+
+.formContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.requestForm {
+  background-color: beige;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.formEntry {
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.itemGreet {
+  border: inherit;
+  justify-self: center;
+  font-size: 2.5rem;
+}
+
+.oneBookItemContainer {
+  display: grid;
+  grid-template-columns:
+  /* 1 */ 25rem;
+  /* 2 */ 1fr;
+  grid-template-rows:
+  /* 1 */ 1fr;
+}
+
+.oneBookItem {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  justify-self: flex-start;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.oneBookItemEntry {
+  font-size: 2.4rem;
+}
+
+.bookImg {
+  grid-column: 1;
+  grid-row: 1;
+  width: 20rem;
+  height: 30rem;
+  content: "Book title";
+  margin-right: 3rem;
+}
+
+@media screen and (max-width:60rem){
+  .grid-container{
+    display: grid;
+    grid-template-columns:
+      1fr;
+    grid-template-rows:
+      /* 1 */ 1fr;
+      /* 2 */ 2fr;
+      /* 2 */ 5fr;
+      /* 3 */ 1fr;
+  }
+  .logoSect {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .menuSect {
+    grid-column: 1;
+    grid-row: 2;
+    flex-direction: row;
+  }
+  .mainSect    {
+    grid-area: mainSect;
+    grid-column: 1;
+    grid-row: 3;
+    margin-left: 0rem;
+  }
+
+  .footerSect {
+    grid-area: footerSect;
+    grid-column: 1;
+    grid-row: 4;
+  }
+}
