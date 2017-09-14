@@ -2,7 +2,9 @@ package com.repository;
 
 import com.entity.Book;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -11,10 +13,12 @@ import java.util.Properties;
 
 public class BookDB {
     private Connection connection;
-    private static final BookDB BOOK_DB = new BookDB();
+    private static BookDB bookDB;
 
     private BookDB() {
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
             InputStream resourceAsStream = getClass().getResourceAsStream("/db.properties");
             Properties properties = new Properties();
             properties.load(resourceAsStream);
@@ -26,6 +30,8 @@ public class BookDB {
             System.out.println("Connection successful");
         } catch (SQLException | IOException e) {
             System.err.println("Can't connection to database");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -72,7 +78,10 @@ public class BookDB {
     }
 
     public static BookDB getInstance() {
-        return BOOK_DB;
+        if (bookDB == null) {
+            bookDB = new BookDB();
+        }
+        return bookDB;
     }
 
     public void closeConnection() {
