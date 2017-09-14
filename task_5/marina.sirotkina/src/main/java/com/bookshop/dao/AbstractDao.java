@@ -68,22 +68,13 @@ public abstract class AbstractDao<T extends Entity> {
   public List<T> getAll() {
     String query = "SELECT * FROM " + getTableName();
     List<T> list = new LinkedList<>();
-    ResultSet rs = null;
-    try (PreparedStatement ps = getConnection().prepareStatement(query)) {
-      rs = ps.executeQuery();
+    try (PreparedStatement ps = getConnection().prepareStatement(query);
+        ResultSet rs = ps.executeQuery()) {
       while (rs.next()) {
         list.add(createEntityFromRS(rs));
       }
     } catch (SQLException ex) {
       ex.printStackTrace();
-    } finally {
-      try {
-        if (rs != null) {
-          rs.close();
-        }
-      } catch (SQLException ex) {
-        ex.printStackTrace();
-      }
     }
     return list;
   }
