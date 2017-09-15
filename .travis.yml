@@ -2,8 +2,14 @@ language: java
 sudo: false
 jdk:
   - oraclejdk8
+  
+services:
+  - mysql
 
 script: ./gradlew check acceptanceTest
+
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS test;'
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
