@@ -47,7 +47,6 @@ public class PrintAuthorsBookServlets extends HttpServlet {
 
         String author = req.getParameter("author");
 
-
         bookDB.getBooks().stream()
                 .filter(p -> p.getAuthor().equals(author)).
                 forEach(p -> {
@@ -55,7 +54,7 @@ public class PrintAuthorsBookServlets extends HttpServlet {
                     printWriter.println(p.getAuthor());
                     printWriter.println(p.getDate());
                     printWriter.println(p.getDescription());
-                    printWriter.println(p.getPicture());
+                    printWriter.println("<img src=\"data:image/jpeg;base64,".concat(p.getPicture()).concat("\"/>"));
                 });
     }
 }

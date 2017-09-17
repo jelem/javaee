@@ -1,6 +1,7 @@
 package com.servlets;
 
 import com.repository.BookDB;
+import com.utilies.Encoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,9 +15,12 @@ import java.io.PrintWriter;
 public class PrintBooksServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         resp.setContentType("text/html; charset=UTF-8");
         PrintWriter out = resp.getWriter();
         req.setCharacterEncoding("UTF-8");
+
+        BookDB bookDB = BookDB.getInstance();
 
         out.print("<html>\n" +
                 "<head>\n" +
@@ -25,16 +29,22 @@ public class PrintBooksServlet extends HttpServlet {
                 "</head>\n" +
                 "<body>");
 
-        out.print("<table>");
-        BookDB.getInstance().getBookSet().forEach(p -> {
-            out.print("<tr>");
-            out.print("<td>".concat(p.getAuthor()).concat("</td>"));
-            out.print("<td>".concat(p.getTitle()).concat("</td>"));
-            out.print("<td>".concat(p.getDate()).concat("</td>"));
-            out.print("</tr>");
+
+        out.println("<table>");
+        bookDB.getBooks().forEach(p -> {
+            out.println("<tr>");
+            out.println("<td>".concat(p.getAuthor()).concat("</td>"));
+            out.println("<td>".concat(p.getTitle()).concat("</td>"));
+            out.println("<td>".concat(p.getDate()).concat("</td>"));
+            out.println("<td>".concat(p.getDescription()).concat("</td>"));
+            out.println("<td><img src=\"data:image/jpeg;base64,".concat(
+                    Encoder.encoding(p.getPicturePath())).concat("\"/></td>"));
+            out.println("<td>" + p.getPicturePath() + "</td>");
+            out.println("</tr>");
         });
-        out.print("</table>");
-        out.print("</body>\n" +
+        out.println("</table>");
+
+        out.println("</body>\n" +
                 "</html>");
     }
 }
