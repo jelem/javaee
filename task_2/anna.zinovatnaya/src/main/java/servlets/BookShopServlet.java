@@ -36,5 +36,4 @@ public class BookShopServlet extends HttpServlet {
     out.println("</body>");
     out.println("</html>");
   }
-
 }
