@@ -4,11 +4,9 @@
   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
 
   <bean name="human" class="com.hillel.game.model.player.HumanPlayer">
-    <constructor-arg value="human"/>
   </bean>
 
   <bean name="robot" class="com.hillel.game.model.player.RobotPlayer">
-    <constructor-arg value="robot"/>
   </bean>
 
   <bean name="tictactoe-bord" class="com.hillel.game.model.board.TicTacToeBoard">

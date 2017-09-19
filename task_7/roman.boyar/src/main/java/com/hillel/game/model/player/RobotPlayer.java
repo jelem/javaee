@@ -1,16 +1,16 @@
 package com.hillel.game.model.player;
 
+import java.util.Random;
+
 public class RobotPlayer extends Player {
 
-  public RobotPlayer(String pname) {
-    super(pname);
-  }
+
 
   @Override
   public int[] makeMove() {
 
-    int row = (int) (Math.random() * 3);
-    int column = (int) (Math.random() * 3); // номер столбца
+    int row = new Random().nextInt(2);
+    int column = new Random().nextInt(2); // номер столбца
     System.out.print("Робот сделал ход! : " + row + "  " + column);
 
     return new int[]{row, column};

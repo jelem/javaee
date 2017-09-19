@@ -4,13 +4,11 @@ import java.util.Scanner;
 
 public class HumanPlayer extends Player {
 
-  public HumanPlayer(String pname) {
-    super(pname);
-  }
+
 
   @Override
   public int[] makeMove() {
-    Scanner scanner = new Scanner(System.in);
+    Scanner scanner = new Scanner(System.in, "UTF-8");
     System.out.print("Сделайте ваш ход: ");
     String move = scanner.next(); // Ход это координаты клетки, например "12"
 
