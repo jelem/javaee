@@ -29,4 +29,40 @@ public class Category {
   @JoinColumn(name = "book_id")
   private Book book;
 
+  public Category() {
+  }
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public Set<CategoryDescription> getCategoryDescriptions() {
+    return categoryDescriptions;
+  }
+
+  public void setCategoryDescriptions(
+      Set<CategoryDescription> categoryDescriptions) {
+    this.categoryDescriptions = categoryDescriptions;
+  }
+
+  public Book getBook() {
+    return book;
+  }
+
+  public void setBook(Book book) {
+    this.book = book;
+  }
+
+  @Override
+  public String toString() {
+    return "Category: "
+        + "id="
+        + id
+        + ", categoryDescriptions="
+        + categoryDescriptions;
+  }
 }
