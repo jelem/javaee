@@ -1,7 +1,12 @@
 package com.hillel.game.model.player;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Repository;
+
 import java.util.Scanner;
 
+@Primary
+@Repository("human")
 public class HumanPlayer extends Player {
 
 
