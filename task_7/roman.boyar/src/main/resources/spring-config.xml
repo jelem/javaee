@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+  <bean name="human" class="com.hillel.game.model.player.HumanPlayer">
+  </bean>
+
+  <bean name="robot" class="com.hillel.game.model.player.RobotPlayer">
+  </bean>
+
+  <bean name="tictactoe-bord" class="com.hillel.game.model.board.TicTacToeBoard">
+
+  </bean>
+
+
+  <bean name="tictactoe" class="com.hillel.game.TicTacToe">
+    <constructor-arg index="0" ref="robot"/>
+    <constructor-arg index="1" ref="human"/>
+    <constructor-arg index="2" ref="tictactoe-bord"/>
+    <property name="currentPlayer" ref="human"/>
+  </bean>
+
+</beans>
