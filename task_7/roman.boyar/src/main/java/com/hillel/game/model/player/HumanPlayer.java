@@ -1,15 +1,11 @@
 package com.hillel.game.model.player;
 
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
-@Primary
-@Repository("human")
+@Component("human")
 public class HumanPlayer extends Player {
-
-
 
   @Override
   public int[] makeMove() {

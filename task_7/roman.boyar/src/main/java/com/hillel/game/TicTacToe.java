@@ -5,9 +5,7 @@ import com.hillel.game.model.player.Player;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 
-@Component("tictactoe")
 public class TicTacToe {
 
   private TicTacToeBoard board;
@@ -15,8 +13,7 @@ public class TicTacToe {
   private Player player2;
   private Player currentPlayer;
 
-  @Autowired
-  public TicTacToe(@Qualifier("human") Player player1, @Qualifier("robot") Player player2,
+  public TicTacToe(Player player1, Player player2,
       TicTacToeBoard board) {
     this.player1 = player1;
     this.player2 = player2;
@@ -24,7 +21,8 @@ public class TicTacToe {
   }
 
   @Autowired
-   public void setCurrentPlayer(Player currentPlayer) {
+  @Qualifier("human")
+  public void setCurrentPlayer(Player currentPlayer) {
     this.currentPlayer = currentPlayer;
   }
 

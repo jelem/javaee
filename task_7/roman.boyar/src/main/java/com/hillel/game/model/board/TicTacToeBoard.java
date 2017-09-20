@@ -1,8 +1,5 @@
 package com.hillel.game.model.board;
 
-import org.springframework.stereotype.Service;
-
-@Service("tictactoe-board")
 public class TicTacToeBoard implements Board {
 
   private char[][] array = new char[3][3];
