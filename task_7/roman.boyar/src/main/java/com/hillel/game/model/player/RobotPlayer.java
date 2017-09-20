@@ -4,7 +4,6 @@ import java.util.Random;
 
 public class RobotPlayer extends Player {
 
-
   @Override
   public int[] makeMove() {
 

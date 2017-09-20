@@ -3,25 +3,19 @@ package com.hillel.game;
 import com.hillel.game.model.board.TicTacToeBoard;
 import com.hillel.game.model.player.Player;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-
 public class TicTacToe {
 
   private TicTacToeBoard board;
   private Player player1;
   private Player player2;
   private Player currentPlayer;
-
-  public TicTacToe(Player player1, Player player2,
-      TicTacToeBoard board) {
+ 
+  public TicTacToe(Player player1, Player player2, TicTacToeBoard board) {
     this.player1 = player1;
     this.player2 = player2;
     this.board = board;
   }
 
-  @Autowired
-  @Qualifier("human")
   public void setCurrentPlayer(Player currentPlayer) {
     this.currentPlayer = currentPlayer;
   }
