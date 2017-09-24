@@ -1,8 +1,11 @@
 package com.hillel.game;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Component("game-board")
 public class Board {
 
   private char[][] array = new char[3][3];

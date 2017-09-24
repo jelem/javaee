@@ -1,11 +1,16 @@
 package com.hillel.game;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 import java.util.Random;
 
+@Component("player-pc")
 public class PlayerPc extends Player {
 
-  public PlayerPc(String pname, char psign) {
+  public PlayerPc(@Value("${pcName}") String pname,
+      @Value("${pcSign}") char psign) {
     super(pname, psign);
   }
 

@@ -1,11 +1,16 @@
 package com.hillel.game;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.util.Arrays;
 import java.util.Scanner;
 
+@Component("player-human")
 public class PlayerHuman extends Player {
 
-  public PlayerHuman(String pname, char psign) {
+  public PlayerHuman(@Value("${humanName}") String pname,
+      @Value("${humanSign}") char psign) {
     super(pname, psign);
   }
 

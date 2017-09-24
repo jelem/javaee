@@ -1,10 +1,21 @@
 package com.hillel.game;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+@Component("tic-tac-game")
 public class TicTacToe {
 
+  @Autowired
   private Board board;
 
+  @Autowired
+  @Qualifier("player-human")
   private Player player1;
+
+  @Autowired
+  @Qualifier("player-pc")
   private Player player2;
 
   private Player currentPlayer;
@@ -52,7 +63,7 @@ public class TicTacToe {
     } else {
       currentPlayer = player1;
     }
-    System.out.println("Ходит " + currentPlayer.getName());
+    System.out.println(String.format("Ходит %s", currentPlayer.getName()));
   }
 
   private void printBoard() {
