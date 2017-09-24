@@ -35,18 +35,28 @@ public class Board {
   // вертикалей и диагоналей.
   // Может быть его как-то можно упростить? Например, с помощью циклов.
   public boolean isGameFinished() {
-    if (array[0][0] == array[0][1]
-        && array[0][1] == array[0][2]
-        && array[0][2] == 'X') {
-      winner = 'X'; // Здесь побеждают крестики
+    int dimSize = array.length;
+
+    //diagonal
+    if ((array[1][1] == array[0][0] && array[1][1] == array[2][2])
+        || (array[1][1] == array[0][2] && array[1][1] == array[2][0])) {
+      winner = array[1][1];
       return true;
     }
 
-    if (array[0][0] == array[0][1]
-        && array[0][1] == array[0][2]
-        && array[0][2] == 'O') {
-      winner = 'O'; // Здесь побеждают нолики
-      return true;
+    for (int indRow = 0; indRow < dimSize; indRow++) {
+      //horizontal
+      if (array[indRow][0] == array[indRow][1]
+          && array[indRow][1] == array[indRow][2]) {
+        winner = array[indRow][0];
+        return true;
+      }
+      //vertical
+      if (array[0][indRow] == array[1][indRow]
+          && array[1][indRow] == array[2][indRow]) {
+        winner = array[0][indRow];
+        return true;
+      }
     }
 
     return false;
