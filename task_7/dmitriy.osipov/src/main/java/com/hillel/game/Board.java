@@ -1,5 +1,8 @@
 package com.hillel.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
 
   private char[][] array = new char[3][3];
@@ -30,10 +33,6 @@ public class Board {
     array[row][column] = currentPlayer;
   }
 
-  // Метод работает только для первой строки нашего поля.
-  // Подумайте как можно его доделать для всех горизонталей,
-  // вертикалей и диагоналей.
-  // Может быть его как-то можно упростить? Например, с помощью циклов.
   public boolean isGameFinished() {
     int dimSize = array.length;
 
@@ -68,5 +67,19 @@ public class Board {
     } else {
       return "Нолики одержали победу";
     }
+  }
+
+  public List<int[]> getFreeCells() {
+    int dim = array.length;
+    List<int[]> freeCells = new ArrayList<>();
+    for (int indRow = 0; indRow < dim; indRow++) {
+      for (int indCol = 0; indCol < dim; indCol++) {
+        if (array[indRow][indCol] == ' ') {
+          int[] cellCoord = {indRow, indCol};
+          freeCells.add(cellCoord);
+        }
+      }
+    }
+    return freeCells;
   }
 }

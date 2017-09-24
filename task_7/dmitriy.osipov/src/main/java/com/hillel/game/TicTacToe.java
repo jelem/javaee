@@ -1,26 +1,37 @@
 package com.hillel.game;
 
-import java.util.Scanner;
-
-// В этом классе необходимо заменить встроенные объекты
-// на Dependency Injection с помощью Spring
 public class TicTacToe {
 
-  private Board board = new Board();
+  private Board board;
 
-  // В этой программе эти классы ничего не делают.
-  // Вам нужно добавить 2 реализации игрока:
-  //  - компьютер
-  //  - человек
-  private Player player1 = new Player("John");
-  private Player player2 = new Player("Tony");
+  private Player player1;
+  private Player player2;
 
-  // Игрок, который в данный момент делает ход.
-  // Тип данных должен быть Player и хранить
-  // одного из игроков
-  private char currentPlayer = 'X';
+  private Player currentPlayer;
+
+  public TicTacToe() {
+  }
+
+  public TicTacToe(Board board, Player player1, Player player2) {
+    this.board = board;
+    this.player1 = player1;
+    this.player2 = player2;
+  }
+
+  public void setBoard(Board board) {
+    this.board = board;
+  }
+
+  public void setPlayer1(Player player1) {
+    this.player1 = player1;
+  }
+
+  public void setPlayer2(Player player2) {
+    this.player2 = player2;
+  }
 
   public void startGame() {
+    currentPlayer = player1;
     while (!gameFinished()) {
       makeMove();
       printBoard();
@@ -36,30 +47,20 @@ public class TicTacToe {
   }
 
   private void changeCurrentPlayer() {
-    if (currentPlayer == 'X') {
-      currentPlayer = 'O';
+    if (currentPlayer == player1) {
+      currentPlayer = player2;
     } else {
-      currentPlayer = 'X';
+      currentPlayer = player1;
     }
+    System.out.println("Ходит " + currentPlayer.getName());
   }
 
   private void printBoard() {
     board.print();
   }
 
-  // В этом методе данные вводятся с клавиатуры,
-  // такой подход нужен для человека, но не для компьютера.
-  // Перенесите эту функциональность в соответсвующую реализацию
-  // игрока, а в этом методе вызывайте общий метод интерфейса Player
   private void makeMove() {
-    Scanner scanner = new Scanner(System.in);
-    System.out.print("Сделайте ваш ход: ");
-    String move = scanner.next(); // Ход это координаты клетки, например "12"
-
-    int row = move.charAt(0) - 48; // Получаем код символа из таблицы ASCII (это номер строки)
-    int column = move.charAt(1) - 48; // номер столбца
-
-    board.fillCell(row, column, currentPlayer);
+    currentPlayer.makeMove(board);
   }
 
   private boolean gameFinished() {
