@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+  <bean name="player-repository"
+    class="app.tasks.task_7.AppConfigV2.repository.PlayerRepositoryImpl">
+  </bean>
+
+  <bean name="player-second-repository"
+    class="app.tasks.task_7.AppConfigV2.repository.PlayerRepositorySecondImpl">
+  </bean>
+
+  <bean name="player-service"
+    class="app.tasks.task_7.AppConfigV2.service.PlayerServiceImpl"
+    autowire="byType">
+    <property name="playerRepository" ref="player-repository"/>
+    <constructor-arg index="0" ref="player-repository"/>
+  </bean>
+
+  <bean name="board-repository"
+    class="app.tasks.task_7.AppConfigV2.repository.BoardRepositoryImpl">
+  </bean>
+
+  <bean name="board-second-repository"
+    class="app.tasks.task_7.AppConfigV2.repository.BoardRepositorySecondImpl">
+  </bean>
+
+  <bean name="board-service"
+    class="app.tasks.task_7.AppConfigV2.service.BoardServiceImpl"
+    autowire="byType">
+    <property name="boardRepository" ref="board-repository"/>
+    <constructor-arg index="0" ref="board-repository"/>
+  </bean>
+
+  <!--<bean name="Human" class="app.tasks.task_7.model.Player.HumanPlayer">
+  </bean>
+
+  <bean name="PC" class="app.tasks.task_7.model.Player.PCPlayer">
+  </bean>
+
+  <bean name="tictactoe-board" class="app.tasks.task_7.model.TicTacToe">
+
+    <constructor-arg index="0" ref="Human"/>
+    <constructor-arg index="1" ref="PC"/>
+    <constructor-arg index="2" ref="tictactoe-board"/>
+  </bean>-->
+
+
+
+  <!--Annotation based-->
+  <context:annotation-config/>
+
+  <context:component-scan base-package="app.tasks.task_7"/>
+
+
+
+</beans>
