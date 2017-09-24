@@ -8,11 +8,12 @@ public class Board {
   private char[][] array = new char[3][3];
 
   private char winner;
+  private char initChar = ' ';
 
   public Board() {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
-        array[i][j] = ' '; // Заносим пробел в каждую ячейку массива
+        array[i][j] = initChar; // Заносим пробел в каждую ячейку массива
       }
     }
   }
@@ -37,22 +38,25 @@ public class Board {
     int dimSize = array.length;
 
     //diagonal
-    if ((array[1][1] == array[0][0] && array[1][1] == array[2][2])
-        || (array[1][1] == array[0][2] && array[1][1] == array[2][0])) {
+    if ((array[1][1] != initChar)
+        && ((array[1][1] == array[0][0] && array[1][1] == array[2][2])
+        || (array[1][1] == array[0][2] && array[1][1] == array[2][0]))) {
       winner = array[1][1];
       return true;
     }
 
     for (int indRow = 0; indRow < dimSize; indRow++) {
       //horizontal
-      if (array[indRow][0] == array[indRow][1]
-          && array[indRow][1] == array[indRow][2]) {
+      if ((array[indRow][0] != initChar)
+          && (array[indRow][0] == array[indRow][1]
+          && array[indRow][1] == array[indRow][2])) {
         winner = array[indRow][0];
         return true;
       }
       //vertical
-      if (array[0][indRow] == array[1][indRow]
-          && array[1][indRow] == array[2][indRow]) {
+      if ((array[0][indRow] != initChar)
+          && (array[0][indRow] == array[1][indRow]
+          && array[1][indRow] == array[2][indRow])) {
         winner = array[0][indRow];
         return true;
       }
@@ -74,7 +78,7 @@ public class Board {
     List<int[]> freeCells = new ArrayList<>();
     for (int indRow = 0; indRow < dim; indRow++) {
       for (int indCol = 0; indCol < dim; indCol++) {
-        if (array[indRow][indCol] == ' ') {
+        if (array[indRow][indCol] == initChar) {
           int[] cellCoord = {indRow, indCol};
           freeCells.add(cellCoord);
         }
