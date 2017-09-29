@@ -1,0 +1,5 @@
+com\hillel\spring\mvc\jpa\repository\StudentRepository.class
+com\hillel\spring\mvc\jpa\controller\StudentController.class
+com\hillel\spring\mvc\jpa\service\StudentService.class
+com\hillel\spring\mvc\jpa\Main.class
+com\hillel\spring\mvc\jpa\model\Student.class
