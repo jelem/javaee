@@ -32,7 +32,7 @@
     class="app.tasks.task_7.AppConfigV2.service.BoardServiceImpl"
     autowire="byType">
     <property name="boardRepository" ref="board-repository"/>
-    <constructor-arg index="0" ref="board-repository"/>
+   <!-- <constructor-arg index="0" ref="board-repository"/>-->
   </bean>
 
   <!--<bean name="Human" class="app.tasks.task_7.model.Player.HumanPlayer">
