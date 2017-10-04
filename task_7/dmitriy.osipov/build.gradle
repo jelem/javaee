@@ -1,0 +1,30 @@
+group 'com.hillel.task7'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+	compile group: 'org.springframework', name: 'spring-context', version: '4.3.11.RELEASE'
+}
+
+checkstyle {
+    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+    checkstyleTest.enabled = false
+    toolVersion = '7.1.2'
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled false
+        html.enabled true
+    }
+}
