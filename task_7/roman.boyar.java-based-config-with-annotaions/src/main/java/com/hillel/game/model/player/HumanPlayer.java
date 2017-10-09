@@ -1,8 +1,10 @@
 package com.hillel.game.model.player;
 
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
 
+@Component("human")
 public class HumanPlayer extends Player {
 
   @Override
