@@ -22,7 +22,7 @@ public class AuthorController {
   @Autowired
   private AuthorService authorService;
 
-  @RequestMapping(method = RequestMethod.GET)
+  @RequestMapping(value = "/all", method = RequestMethod.GET)
   public List<Author> getAll() {
     return authorService.getAll();
   }
@@ -52,7 +52,7 @@ public class AuthorController {
     return authorService.update(author);
   }
 
-  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+  @RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
   public boolean delete(@PathVariable(name = "id") long id) throws AuthorException {
     return authorService.delete(id);
   }

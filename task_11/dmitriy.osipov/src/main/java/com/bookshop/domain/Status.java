@@ -20,7 +20,15 @@ public enum Status {
   GENRE_ERROR(1020, "Some problems with book's genre"),
   GENRE_EXISTS(1021, "Genre already exists"),
   GENRE_NOT_FOUND(1022, "Genre not found"),
-  GENRE_INVALID(1023, "Some fields have incorrect values");
+  GENRE_INVALID(1023, "Some fields have incorrect values"),
+  USER_ERROR(1030, "Some problems with user"),
+  USER_EXISTS(1031, "User already exists"),
+  USER_NOT_FOUND(1032, "User not found"),
+  USER_INVALID(1033, "Some fields have incorrect values"),
+  ORDER_ERROR(1040, "Some problems with order"),
+  ORDER_EXISTS(1041, "Order already exists"),
+  ORDER_NOT_FOUND(1042, "Order not found"),
+  ORDER_INVALID(1043, "Some fields have incorrect values");;
 
   Status(int code, String message) {
     this.code = code;

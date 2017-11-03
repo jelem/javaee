@@ -45,6 +45,7 @@ tasks.withType(FindBugs) {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
-    compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile ('mysql:mysql-connector-java:6.0.6')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

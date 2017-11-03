@@ -22,7 +22,7 @@ public class GenreController {
   @Autowired
   private GenreService genreService;
 
-  @RequestMapping(method = RequestMethod.GET)
+  @RequestMapping(value = "/all", method = RequestMethod.GET)
   public List<Genre> getAll() {
     return genreService.getAll();
   }
@@ -47,7 +47,7 @@ public class GenreController {
     return genreService.update(genre);
   }
 
-  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+  @RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
   public boolean delete(@PathVariable(name = "id") long id) throws GenreNotFoundException {
     return genreService.delete(id);
   }

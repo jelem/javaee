@@ -10,11 +10,13 @@ import com.bookshop.exception.AuthorNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-public class AuthorExceptionsAspect extends ResponseEntityExceptionHandler {
+@ControllerAdvice(basePackages = {"com.bookshop.controller"})
+public class AuthorExceptionsHandler extends ResponseEntityExceptionHandler {
 
   @Autowired
   private ExceptionAspectsUtils utils;

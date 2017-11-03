@@ -23,7 +23,7 @@ public class BookController {
   @Autowired
   private BookService bookService;
 
-  @RequestMapping(method = RequestMethod.GET)
+  @RequestMapping(value = "/all", method = RequestMethod.GET)
   public List<Book> getAll() throws BookException {
     return bookService.getAll();
   }
@@ -73,7 +73,7 @@ public class BookController {
     return bookService.update(book);
   }
 
-  @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+  @RequestMapping(value = "/{id}/delete", method = RequestMethod.DELETE)
   public boolean delete(@PathVariable(name = "id") long id) throws BookException {
     return bookService.delete(id);
   }

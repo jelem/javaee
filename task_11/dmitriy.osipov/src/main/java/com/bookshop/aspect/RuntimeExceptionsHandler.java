@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-public class RuntimeExceptionsAspect extends ResponseEntityExceptionHandler {
+public class RuntimeExceptionsHandler extends ResponseEntityExceptionHandler {
 
   @Autowired
   private ExceptionAspectsUtils utils;
