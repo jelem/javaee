@@ -50,8 +50,9 @@ public class OrderService {
       throw new OrderAlreadyExistsException();
     }
 
+    Order res = orderRepository.save(order);
     order.setEntities(entityService.addNew(order));
-    return orderRepository.save(order);
+    return res;
   }
 
   @Transactional

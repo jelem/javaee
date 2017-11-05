@@ -24,9 +24,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/*/add*", "/*/update*",
             "/**/delete*", "/orders/bydone", "/orders/all",
             "/orders/*", "/orders/byuser")
-        .hasAuthority("ADMIN")
+        .hasAuthority("1")
         .antMatchers("/orders/buy*", "/orders/*")
-        .hasAuthority("CUSTOMER")
+        .hasAuthority("0")
         .and()
         .httpBasic()
         .and()
