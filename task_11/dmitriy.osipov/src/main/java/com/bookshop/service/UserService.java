@@ -1,7 +1,7 @@
 package com.bookshop.service;
 
-import com.bookshop.exception.UserException;
 import com.bookshop.exception.UserAlreadyExistsException;
+import com.bookshop.exception.UserException;
 import com.bookshop.exception.UserInvalidException;
 import com.bookshop.exception.UserNotFoundException;
 import com.bookshop.model.User;

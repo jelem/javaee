@@ -16,7 +16,6 @@ public class ExceptionAspectsUtils extends ResponseEntityExceptionHandler {
 
   public ResponseEntity create(Exception exception, WebRequest req, Response response) {
     response.put(ResponseKeys.EXCEPTION_TYPE, exception.getClass());
-//    response.put(ResponseKeys.EXCEPTION, exception);
     response.put(ResponseKeys.EXCEPTION_MESSAGE, exception.getMessage());
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);

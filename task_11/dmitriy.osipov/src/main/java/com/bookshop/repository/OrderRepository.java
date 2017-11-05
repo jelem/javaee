@@ -10,5 +10,6 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
   List<Order> findAllByUser(User user);
+
   List<Order> findAllByDone(boolean isDone);
 }

@@ -28,7 +28,7 @@ public enum Status {
   ORDER_ERROR(1040, "Some problems with order"),
   ORDER_EXISTS(1041, "Order already exists"),
   ORDER_NOT_FOUND(1042, "Order not found"),
-  ORDER_INVALID(1043, "Some fields have incorrect values");;
+  ORDER_INVALID(1043, "Some fields have incorrect values");
 
   Status(int code, String message) {
     this.code = code;
