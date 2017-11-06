@@ -23,13 +23,15 @@ public class Order {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
-
+/*
   @ManyToOne(fetch = FetchType.EAGER)
   @JoinTable(
       name = "user_orders",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "order_id")
-  )
+  )*/
+  @ManyToOne
+  @JoinColumn(name = "user_id")
   private User user;
 
   @OneToMany(fetch = FetchType.EAGER, mappedBy = "order")

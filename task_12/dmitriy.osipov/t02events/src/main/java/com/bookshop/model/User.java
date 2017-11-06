@@ -25,21 +25,13 @@ public class User {
   @Column(name = "password")
   private String password;
 
-  @Column(name = "role")
-  private Role role;
-
-  public User(String login, String password, Role role) {
+  public User(String login, String password) {
     this.login = login;
     this.password = password;
-    this.role = role;
-  }
-
-  public User(String login, String password) {
-    this(login, password, Role.CUSTOMER);
   }
 
   public User() {
-    this("None", "", Role.CUSTOMER);
+    this("None", "");
   }
 
   public long getId() {
@@ -66,14 +58,6 @@ public class User {
     this.password = password;
   }
 
-  public Role getRole() {
-    return role;
-  }
-
-  public void setRole(Role role) {
-    this.role = role;
-  }
-
   public void checkUserFields() throws UserInvalidException {
     if ((login == null || login.isEmpty())
         || (password == null || password.isEmpty())) {
@@ -93,13 +77,12 @@ public class User {
     User that = (User) obj;
 
     return Objects.equals(this.login, that.login)
-        && Objects.equals(this.password, that.password)
-        && Objects.equals(this.role, that.role);
+        && Objects.equals(this.password, that.password);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(login, password, role);
+    return Objects.hash(login, password);
   }
 
   @Override

@@ -24,9 +24,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers("/*/add*", "/*/update*",
             "/**/delete*", "/orders/bydone", "/orders/all",
             "/orders/*", "/orders/byuser")
-        .hasAuthority("1")
+        .hasAuthority("ADMIN")
         .antMatchers("/orders/buy*", "/orders/*")
-        .hasAuthority("0")
+        .hasAuthority("CUSTOMER")
         .and()
         .httpBasic()
         .and()
@@ -42,7 +42,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "select u.login as username, u.password, true as enabled from users u "
                 + "where u.login=?")
         .authoritiesByUsernameQuery(
-            "select u.login as username, u.role as role from users u "
+            "select u.login as username, r.name as role from users u "
+                + "join user_role ur "
+                + "join roles r "
+                + "on r.id=ur.role_id and u.id=ur.user_id "
                 + "where u.login=?");
   }
 }

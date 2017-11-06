@@ -1,5 +1,6 @@
 package com.bookshop.service;
 
+import com.bookshop.events.NewOrderEvent;
 import com.bookshop.exception.OrderAlreadyExistsException;
 import com.bookshop.exception.OrderException;
 import com.bookshop.exception.OrderInvalidException;
@@ -9,6 +10,7 @@ import com.bookshop.model.User;
 import com.bookshop.repository.OrderRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,9 @@ public class OrderService {
 
   @Autowired
   private OrderEntityService entityService;
+
+  @Autowired
+  private ApplicationEventPublisher publisher;
 
   public List<Order> getAll() {
     return orderRepository.findAll();
@@ -51,7 +56,7 @@ public class OrderService {
     }
 
     Order res = orderRepository.save(order);
-    order.setEntities(entityService.addNew(order));
+    res.setEntities(entityService.addNew(res));
     return res;
   }
 
@@ -101,11 +106,21 @@ public class OrderService {
     return entitiesDeleted && !orderRepository.exists(orderId);
   }
 
-  @Transactional
+
   public Order buy(Order order) throws OrderException {
-    Order result;
     order.setAccepted(true);
     order.setDone(false);
+
+    Order result = issueOrder(order);
+
+    publisher.publishEvent(new NewOrderEvent(order));
+
+    return result;
+  }
+
+  @Transactional
+  private Order issueOrder(Order order) throws OrderException {
+    Order result;
     Order inDb = orderRepository.findOne(order.getId());
     if (inDb == null) {
       result = this.addNew(order);
@@ -113,6 +128,7 @@ public class OrderService {
       checkForDone(inDb);
       result = this.update(order);
     }
+
     return result;
   }
 }

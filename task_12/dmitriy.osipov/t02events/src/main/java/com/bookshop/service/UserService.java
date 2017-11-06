@@ -4,19 +4,25 @@ import com.bookshop.exception.UserAlreadyExistsException;
 import com.bookshop.exception.UserException;
 import com.bookshop.exception.UserInvalidException;
 import com.bookshop.exception.UserNotFoundException;
+import com.bookshop.model.Role;
 import com.bookshop.model.User;
+import com.bookshop.model.UserRole;
 import com.bookshop.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class UserService {
 
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private RoleService roleService;
 
   public List<User> getAll() {
     return userRepository.findAll();
@@ -48,6 +54,11 @@ public class UserService {
         || findByLogin(user.getLogin()) != null) {
       throw new UserAlreadyExistsException();
     }
+    long id = user.getId();
+    Set<UserRole> userRoles = roleService.getUserRoles(id);
+    userRoles.add(new UserRole(id, Role.CUSTOMER));
+    roleService.save(userRoles);
+
     return userRepository.save(user);
   }
 

@@ -46,6 +46,8 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-mail')
     compile ('mysql:mysql-connector-java:6.0.6')
+//    compile('javax.mail:javax.mail-api:1.5.6')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
