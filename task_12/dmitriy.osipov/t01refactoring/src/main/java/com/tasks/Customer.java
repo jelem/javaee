@@ -18,6 +18,7 @@ public class Customer {
   }
 
   public String statement() {
+    AmountCalculator calculator = new AmountCalculator();
     double totalAmount = 0;
     int frequentRenterPoints = 0;
     Enumeration rentals = this.rentals.elements();
@@ -28,25 +29,7 @@ public class Customer {
       Rental each = (Rental) rentals.nextElement();
 
       // determines the amount for each line
-      switch (each.getMovie().getPriceCode()) {
-        case REGULAR:
-          thisAmount += 2;
-          if (each.getDaysRented() > 2) {
-            thisAmount += (each.getDaysRented() - 2) * 1.5;
-          }
-          break;
-        case NEW_RELEASE:
-          thisAmount += each.getDaysRented() * 3;
-          break;
-        case CHILDRENS:
-          thisAmount += 1.5;
-          if (each.getDaysRented() > 3) {
-            thisAmount += (each.getDaysRented() - 3) * 1.5;
-          }
-          break;
-        default:
-          break;
-      }
+      thisAmount += calculator.calculate(each);
 
       frequentRenterPoints++;
 
