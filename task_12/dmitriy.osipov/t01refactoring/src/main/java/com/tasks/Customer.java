@@ -27,14 +27,8 @@ public class Customer {
     StringBuilder result = new StringBuilder(String.format("Rental Record for %s\n", getName()));
 
     while (rentals.hasMoreElements()) {
-      double thisAmount = 0;
       Rental each = (Rental) rentals.nextElement();
-
-      // determines the amount for each line
-      thisAmount += calculator.calculate(each);
-
-      frequentRenterPoints++;
-
+      double thisAmount = calculator.calculate(each);
       growRenterPointsForNewRelease(each);
 
       result.append(
@@ -50,11 +44,9 @@ public class Customer {
     return result.toString();
   }
 
-  private void growRenterPointsForNewRelease(Rental each) {
-    if (each.getMovie().getPriceCode() == MoviePriceCode.NEW_RELEASE
-        && each.getDaysRented() > 1) {
-      frequentRenterPoints++;
-    }
+  private void growRenterPointsForNewRelease(Rental rental) {
+    frequentRenterPoints += (rental.getMovie().getPriceCode() == MoviePriceCode.NEW_RELEASE
+        && rental.getDaysRented() > 1) ? 2 : 1;
   }
 
 
