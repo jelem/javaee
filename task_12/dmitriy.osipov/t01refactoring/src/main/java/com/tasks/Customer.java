@@ -22,7 +22,7 @@ public class Customer {
     double totalAmount = 0;
     int frequentRenterPoints = 0;
     Enumeration rentals = this.rentals.elements();
-    String result = "Rental Record for " + getName() + "\n";
+    StringBuilder result = new StringBuilder(String.format("Rental Record for %s\n", getName()));
 
     while (rentals.hasMoreElements()) {
       double thisAmount = 0;
@@ -38,16 +38,17 @@ public class Customer {
         frequentRenterPoints++;
       }
 
-      result += "\t" + each.getMovie().getTitle() + "\t"
-          + String.valueOf(thisAmount) + "\n";
+      result.append(
+          String.format("\t%s\t%s\n", each.getMovie().getTitle(), String.valueOf(thisAmount)));
       totalAmount += thisAmount;
 
     }
 
-    result += "You owed " + String.valueOf(totalAmount) + "\n";
-    result += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points\n";
+    result.append(String.format("You owed %s\n", String.valueOf(totalAmount)));
+    result.append(String
+        .format("You earned %s frequent renter points\n", String.valueOf(frequentRenterPoints)));
 
-    return result;
+    return result.toString();
   }
 
 
