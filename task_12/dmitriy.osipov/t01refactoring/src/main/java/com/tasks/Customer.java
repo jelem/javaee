@@ -5,6 +5,8 @@ import java.util.Vector;
 
 public class Customer {
 
+  private int frequentRenterPoints;
+
   public Customer(String name) {
     this.name = name;
   }
@@ -19,8 +21,8 @@ public class Customer {
 
   public String statement() {
     AmountCalculator calculator = new AmountCalculator();
+    frequentRenterPoints = 0;
     double totalAmount = 0;
-    int frequentRenterPoints = 0;
     Enumeration rentals = this.rentals.elements();
     StringBuilder result = new StringBuilder(String.format("Rental Record for %s\n", getName()));
 
@@ -33,10 +35,7 @@ public class Customer {
 
       frequentRenterPoints++;
 
-      if (each.getMovie().getPriceCode() == MoviePriceCode.NEW_RELEASE
-          && each.getDaysRented() > 1) {
-        frequentRenterPoints++;
-      }
+      growRenterPointsForNewRelease(each);
 
       result.append(
           String.format("\t%s\t%s\n", each.getMovie().getTitle(), String.valueOf(thisAmount)));
@@ -49,6 +48,13 @@ public class Customer {
         .format("You earned %s frequent renter points\n", String.valueOf(frequentRenterPoints)));
 
     return result.toString();
+  }
+
+  private void growRenterPointsForNewRelease(Rental each) {
+    if (each.getMovie().getPriceCode() == MoviePriceCode.NEW_RELEASE
+        && each.getDaysRented() > 1) {
+      frequentRenterPoints++;
+    }
   }
 
 
