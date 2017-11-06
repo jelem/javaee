@@ -1,14 +1,21 @@
 package com.tasks;
 
-import java.util.Enumeration;
 import java.util.Vector;
 
 public class Customer {
 
+  private String name;
+  private Vector<Rental> rentals;
+
   private int frequentRenterPoints;
+  private double totalAmount;
+
+  private Logger logger;
 
   public Customer(String name) {
     this.name = name;
+    this.rentals = new Vector<>();
+    this.logger = new Logger();
   }
 
   public void addRental(Rental rental) {
@@ -20,36 +27,33 @@ public class Customer {
   }
 
   public String statement() {
-    AmountCalculator calculator = new AmountCalculator();
+    logger.logName(name);
+
+    calculateTotalAmount();
+
+    logger.logOwed(totalAmount);
+    logger.logTotalRenterPoints(frequentRenterPoints);
+
+    return logger.getResult();
+  }
+
+  private void calculateTotalAmount() {
+    totalAmount = 0;
     frequentRenterPoints = 0;
-    double totalAmount = 0;
-    Enumeration rentals = this.rentals.elements();
-    StringBuilder result = new StringBuilder(String.format("Rental Record for %s\n", getName()));
+    AmountCalculator calculator = new AmountCalculator();
 
-    while (rentals.hasMoreElements()) {
-      Rental each = (Rental) rentals.nextElement();
-      double thisAmount = calculator.calculate(each);
-      growRenterPointsForNewRelease(each);
+    for (Rental rental : this.rentals) {
+      double thisAmount = calculator.calculate(rental);
+      logger.logAmount(rental.getMovie().getTitle(), thisAmount);
 
-      result.append(
-          String.format("\t%s\t%s\n", each.getMovie().getTitle(), String.valueOf(thisAmount)));
+      growRenterPointsForNewRelease(rental);
+
       totalAmount += thisAmount;
-
     }
-
-    result.append(String.format("You owed %s\n", String.valueOf(totalAmount)));
-    result.append(String
-        .format("You earned %s frequent renter points\n", String.valueOf(frequentRenterPoints)));
-
-    return result.toString();
   }
 
   private void growRenterPointsForNewRelease(Rental rental) {
     frequentRenterPoints += (rental.getMovie().getPriceCode() == MoviePriceCode.NEW_RELEASE
         && rental.getDaysRented() > 1) ? 2 : 1;
   }
-
-
-  private String name;
-  private Vector rentals = new Vector();
 }
