@@ -1,0 +1,13 @@
+apply plugin: 'java'
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+            
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompile group: 'org.assertj', name: 'assertj-core', version: '3.8.0'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.hamcrest:hamcrest-all:1.3'
+}
