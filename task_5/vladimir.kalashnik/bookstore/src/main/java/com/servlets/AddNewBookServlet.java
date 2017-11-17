@@ -40,6 +40,14 @@ public class AddNewBookServlet extends HttpServlet {
                 "            <td><input type=\"text\" name=\"dateOfPublishing\"> </td>\n" +
                 "        </tr>\n" +
                 "        <tr>\n" +
+                "            <td>description: </td>\n" +
+                "            <td><input type=\"text\" name=\"description\"> </td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
+                "            <td>picture: </td>\n" +
+                "            <td><input type=\"text\" name=\"pictureName\"> </td>\n" +
+                "        </tr>\n" +
+                "        <tr>\n" +
                 "            <td></td>\n" +
                 "            <td><input type=\"submit\" value=\"Register\"/></td>\n" +
                 "        </tr>\n" +
@@ -53,14 +61,22 @@ public class AddNewBookServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html; charset=UTF-8");
         req.setCharacterEncoding("UTF-8");
+
+        BookDB bookDB = BookDB.getInstance();
+
         String bookName = req.getParameter("title");
         String author = req.getParameter("author");
         String dateOfPublishing = req.getParameter("dateOfPublishing");
-        Book book = new Book(bookName, author, dateOfPublishing);
+        String description = req.getParameter("description");
+        String pictureName = req.getParameter("pictureName");
 
-        BookDB.getInstance().addBook(book);
+        Book book = new Book(bookName, author, dateOfPublishing, description);
+
+
+        bookDB.addBook(book, pictureName);
+
         resp.sendRedirect(req.getContextPath());
-
     }
 }

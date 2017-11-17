@@ -1,6 +1,7 @@
 package com.servlets;
 
-import com.book.IBookDB;
+import com.repository.BookDB;
+import com.utilies.Encoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,12 +12,16 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/books/search/author")
-public class PrintAuthorsBooks extends HttpServlet implements IBookDB {
+public class PrintAuthorsBookServlets extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html; charset=UTF-8");
         PrintWriter out = resp.getWriter();
+        req.setCharacterEncoding("UTF-8");
+
         out.println("<html>\n" +
                 "<head>\n" +
+                " <meta charset=\"utf-8\">" +
                 "    <title>Some text</title>\n" +
                 "</head>\n" +
                 "<body>");
@@ -37,11 +42,24 @@ public class PrintAuthorsBooks extends HttpServlet implements IBookDB {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/html; charset=UTF-8");
         PrintWriter printWriter = resp.getWriter();
+        req.setCharacterEncoding("UTF-8");
+        BookDB bookDB = BookDB.getInstance();
 
         String author = req.getParameter("author");
-        IBookDB.getBookDB().getBookList().stream()
+
+        bookDB.getBooks().stream()
                 .filter(p -> p.getAuthor().equals(author)).
-                forEach(printWriter::println);
+                forEach(p -> {
+                    printWriter.println(p.getTitle());
+                    printWriter.println(p.getAuthor());
+                    printWriter.println(p.getDate());
+                    printWriter.println(p.getDescription());
+                    printWriter.println("<img src=\"data:image/jpeg;base64,".concat(
+                            Encoder.encoding((p.getPicturePath())))
+                            .concat("\"/>"));
+
+                });
     }
 }
