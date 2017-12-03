@@ -1,0 +1,13 @@
+com\hillel\spring\mvc\jpa\repository\ExamRepository.class
+com\hillel\spring\mvc\jpa\service\SubjectService.class
+com\hillel\spring\mvc\jpa\model\Student.class
+com\hillel\spring\mvc\jpa\model\Subject.class
+com\hillel\spring\mvc\jpa\repository\StudentRepository.class
+com\hillel\spring\mvc\jpa\controller\StudentController.class
+com\hillel\spring\mvc\jpa\report\ExamsReport.class
+com\hillel\spring\mvc\jpa\controller\ExamController.class
+com\hillel\spring\mvc\jpa\Main.class
+com\hillel\spring\mvc\jpa\service\ExamService.class
+com\hillel\spring\mvc\jpa\model\Exam.class
+com\hillel\spring\mvc\jpa\service\StudentService.class
+com\hillel\spring\mvc\jpa\repository\SubjectRepository.class
